@@ -582,6 +582,386 @@ struct ToneAnalysisResponse: Codable {
 
 ---
 
+## MODULE 4A: Temporal Response Analyzer
+
+### Purpose
+Analyze the **first few seconds** after critical moments (tough questions, topic transitions) where involuntary responses occur before conscious control.
+
+### Scientific Basis
+
+Research validates this approach:
+
+| Signal | Time Window | Detectability | Source |
+|--------|-------------|---------------|--------|
+| Microexpressions | 0-500ms | High (before masking) | Ekman et al. |
+| Response Latency | 500ms-2s | Very High | Cognitive Load Theory |
+| Filler Words | 0-5s | High | Deception Detection Research |
+| Hedging Language | 0-10s | High | Linguistic Analysis |
+| Pitch/Pace Shift | 0-5s | Medium | Vocal Stress Analysis |
+
+Nature Scientific Reports (2025): Multimodal deception detection achieves **96% accuracy** using audio-visual fusion.
+
+### Interface Contract
+
+```swift
+// TemporalResponseAnalyzer.swift
+
+protocol TemporalResponseDelegate: AnyObject {
+    func temporalAnalyzerDetectedAnomaly(_ anomaly: TemporalAnomaly)
+    func temporalAnalyzerUpdatedBaseline(_ baseline: SpeakerBaseline)
+}
+
+/// Represents a critical moment that triggers temporal analysis
+struct CriticalMoment {
+    let id: UUID
+    let momentType: CriticalMomentType
+    let timestamp: Date
+    let triggerText: String?              // The question or prompt that triggered
+    let sessionTimeOffset: TimeInterval   // Time into session
+}
+
+enum CriticalMomentType: String {
+    case hardQuestion           // Direct challenging question detected
+    case topicTransition        // Shift to sensitive topic
+    case numberRequest          // Specific number/metric requested
+    case clarificationRequest   // "Can you clarify..."
+    case comparisonRequest      // "How does that compare to..."
+    case silencePeriod          // Unusual pause in conversation
+    case userMarked             // User pressed button to mark moment
+}
+
+/// Analysis of response in first few seconds after critical moment
+struct TemporalResponse {
+    let momentId: UUID
+    let analysisWindow: TimeInterval      // Typically 0-5 seconds
+
+    // Timing Metrics
+    let responseLatencyMs: Int            // Time from question end to first word
+    let firstWordTimestamp: Date
+    let silenceBeforeResponse: TimeInterval
+
+    // Verbal Indicators
+    let fillerWordCount: Int              // "um", "uh", "well", "so"
+    let fillerWords: [String]
+    let hedgingPhraseCount: Int           // "I think", "maybe", "possibly"
+    let hedgingPhrases: [String]
+    let initialWords: [String]            // First 10 words of response
+
+    // Calculated Scores
+    let cognitiveLoadScore: Float         // 0.0 - 1.0 (higher = more load)
+    let confidenceScore: Float            // 0.0 - 1.0 (lower = less confident)
+    let deviationFromBaseline: Float      // Standard deviations from normal
+}
+
+/// Detected anomaly in temporal response
+struct TemporalAnomaly {
+    let id: UUID
+    let momentId: UUID
+    let anomalyType: TemporalAnomalyType
+    let severity: DeltaSeverity
+    let confidence: Float
+
+    let observed: TemporalResponse
+    let baseline: SpeakerBaseline
+
+    let alertTitle: String
+    let alertDetail: String
+}
+
+enum TemporalAnomalyType: String {
+    case unusualLatency         // Response time significantly different from baseline
+    case fillerSpike            // More filler words than normal
+    case hedgingSpike           // More hedging language than normal
+    case combinedLoad           // Multiple indicators simultaneously elevated
+    case baselineBreak          // Sudden change from established pattern
+}
+
+/// Per-speaker baseline for comparison
+struct SpeakerBaseline {
+    let speakerId: String
+    let sampleCount: Int                  // Number of responses in baseline
+
+    // Normal ranges (mean ± stddev)
+    let avgResponseLatencyMs: Int
+    let latencyStdDev: Int
+    let avgFillerWordsPerResponse: Float
+    let fillerStdDev: Float
+    let avgHedgingPhrasesPerResponse: Float
+    let hedgingStdDev: Float
+
+    // Last updated
+    let lastUpdated: Date
+    let confidenceLevel: Float            // Higher with more samples
+}
+
+protocol TemporalResponseAnalyzerProtocol {
+    var delegate: TemporalResponseDelegate? { get set }
+
+    /// Register a critical moment to analyze response to
+    func registerCriticalMoment(_ moment: CriticalMoment)
+
+    /// User manually marks current moment as significant
+    func markCurrentMoment(type: CriticalMomentType)
+
+    /// Feed transcript to analyzer (continuous stream)
+    func processTranscript(_ transcript: FinalTranscript)
+
+    /// Get baseline for speaker (built over time)
+    func getBaseline(for speakerId: String) -> SpeakerBaseline?
+
+    /// Analyze specific moment (can be called retroactively on recording)
+    func analyzeResponse(to moment: CriticalMoment, response: TemporalResponse) -> TemporalAnomaly?
+
+    /// Get all anomalies for session
+    func getSessionAnomalies() -> [TemporalAnomaly]
+}
+```
+
+### Detection Logic
+
+```swift
+// TemporalAnalysisLogic.swift (INTERNAL - do not share)
+
+class TemporalAnalyzer {
+
+    /// Thresholds for anomaly detection
+    struct Thresholds {
+        static let latencyZScore: Float = 2.0       // 2 std devs from mean
+        static let fillerZScore: Float = 2.0
+        static let hedgingZScore: Float = 2.0
+        static let combinedLoadThreshold: Float = 0.7
+        static let minBaselineSamples: Int = 5
+    }
+
+    func analyzeResponse(
+        moment: CriticalMoment,
+        response: TemporalResponse,
+        baseline: SpeakerBaseline?
+    ) -> TemporalAnomaly? {
+
+        // If no baseline, use universal defaults
+        let effectiveBaseline = baseline ?? SpeakerBaseline.universalDefault
+
+        // Calculate z-scores
+        let latencyZ = calculateZScore(
+            value: Float(response.responseLatencyMs),
+            mean: Float(effectiveBaseline.avgResponseLatencyMs),
+            stdDev: Float(effectiveBaseline.latencyStdDev)
+        )
+
+        let fillerZ = calculateZScore(
+            value: Float(response.fillerWordCount),
+            mean: effectiveBaseline.avgFillerWordsPerResponse,
+            stdDev: effectiveBaseline.fillerStdDev
+        )
+
+        let hedgingZ = calculateZScore(
+            value: Float(response.hedgingPhraseCount),
+            mean: effectiveBaseline.avgHedgingPhrasesPerResponse,
+            stdDev: effectiveBaseline.hedgingStdDev
+        )
+
+        // Determine if anomaly
+        if latencyZ > Thresholds.latencyZScore {
+            return TemporalAnomaly(
+                anomalyType: .unusualLatency,
+                severity: latencyZ > 3.0 ? .high : .medium,
+                alertTitle: "Unusual response delay",
+                alertDetail: "Response took \(response.responseLatencyMs)ms vs normal \(effectiveBaseline.avgResponseLatencyMs)ms"
+            )
+        }
+
+        if fillerZ > Thresholds.fillerZScore {
+            return TemporalAnomaly(
+                anomalyType: .fillerSpike,
+                severity: fillerZ > 3.0 ? .high : .medium,
+                alertTitle: "Elevated filler words",
+                alertDetail: "\(response.fillerWordCount) filler words in response (normal: \(Int(effectiveBaseline.avgFillerWordsPerResponse)))"
+            )
+        }
+
+        // Combined cognitive load check
+        let combinedScore = (latencyZ + fillerZ + hedgingZ) / 3.0
+        if combinedScore > Thresholds.combinedLoadThreshold {
+            return TemporalAnomaly(
+                anomalyType: .combinedLoad,
+                severity: .high,
+                alertTitle: "High cognitive load detected",
+                alertDetail: "Multiple stress indicators elevated simultaneously"
+            )
+        }
+
+        return nil
+    }
+
+    // Known filler words to detect
+    static let fillerWords = ["um", "uh", "er", "ah", "well", "so", "like", "you know", "I mean", "basically"]
+
+    // Known hedging phrases
+    static let hedgingPhrases = [
+        "I think", "I believe", "maybe", "possibly", "perhaps",
+        "to my knowledge", "as far as I know", "I'm not sure but",
+        "it could be", "we'll see", "that's a good question",
+        "let me think", "off the top of my head"
+    ]
+}
+```
+
+### Developer Handoff Notes
+- **Scope**: Temporal analysis ONLY - receives transcript chunks with timestamps
+- **Does NOT include**: UI, storage, or moment detection
+- **Inputs**: Transcript with precise timestamps, CriticalMoment triggers
+- **Outputs**: TemporalAnomaly events
+- **CRITICAL**: This is core IP - patterns are the secret sauce
+
+---
+
+## MODULE 4B: Heat Map Generator
+
+### Purpose
+Aggregate temporal anomalies and deltas across a session (and optionally across sessions) to create visual heat maps showing patterns of stress/deviation.
+
+### Interface Contract
+
+```swift
+// HeatMapGenerator.swift
+
+/// A single point in the heat map
+struct HeatMapPoint {
+    let timestamp: Date
+    let sessionTimeOffset: TimeInterval   // Seconds into session
+    let intensity: Float                  // 0.0 - 1.0
+    let contributingFactors: [HeatFactor]
+}
+
+struct HeatFactor {
+    let factorType: HeatFactorType
+    let weight: Float                     // How much it contributed to intensity
+    let description: String
+}
+
+enum HeatFactorType: String {
+    case topicAbsence
+    case temporalAnomaly
+    case toneShift
+    case speakerSilence
+    case hedgingSpike
+    case latencySpike
+    case userMarked
+}
+
+/// Complete heat map for a session
+struct SessionHeatMap {
+    let sessionId: UUID
+    let sessionDuration: TimeInterval
+    let points: [HeatMapPoint]
+
+    // Aggregated metrics
+    let peakIntensity: Float
+    let peakTimestamp: Date
+    let averageIntensity: Float
+    let hotspotCount: Int                 // Number of significant peaks
+
+    // Time-bucketed for visualization (e.g., 30-second buckets)
+    let bucketedIntensities: [Float]
+    let bucketDuration: TimeInterval
+}
+
+/// Aggregated heat map across multiple sessions
+struct AggregatedHeatMap {
+    let sessionIds: [UUID]
+    let sessionCount: Int
+
+    // By normalized time (0-100% of session)
+    let normalizedIntensities: [Float]    // 100 buckets (1% each)
+
+    // By topic
+    let topicHotspots: [String: Float]    // Topic -> avg intensity when discussed
+
+    // By question type
+    let questionTypeHotspots: [CriticalMomentType: Float]
+}
+
+protocol HeatMapGeneratorProtocol {
+    /// Generate heat map for current session
+    func generateSessionHeatMap(
+        deltas: [DetectedDelta],
+        temporalAnomalies: [TemporalAnomaly],
+        sessionDuration: TimeInterval
+    ) -> SessionHeatMap
+
+    /// Add a manual heat point (user marked)
+    func addManualHotspot(at timestamp: Date, intensity: Float)
+
+    /// Aggregate across sessions
+    func aggregateHeatMaps(_ sessions: [SessionHeatMap]) -> AggregatedHeatMap
+
+    /// Get intensity at specific time
+    func getIntensity(at timeOffset: TimeInterval) -> Float
+
+    /// Export for visualization
+    func exportForVisualization() -> HeatMapVisualizationData
+}
+
+/// Data format optimized for SwiftUI visualization
+struct HeatMapVisualizationData {
+    let timeLabels: [String]              // "0:00", "0:30", "1:00", etc.
+    let intensities: [Float]              // Matching intensity values
+    let annotations: [HeatMapAnnotation]  // Key moments to label
+}
+
+struct HeatMapAnnotation {
+    let timeOffset: TimeInterval
+    let label: String
+    let intensity: Float
+}
+```
+
+### Visualization Approach
+
+```
+HEAT MAP TIMELINE (Session View)
+═══════════════════════════════════════════════════════════════
+
+Time:    0:00    5:00    10:00   15:00   20:00   25:00   30:00
+         │       │       │       │       │       │       │
+         ▼       ▼       ▼       ▼       ▼       ▼       ▼
+        ░░░░░░▓▓▓▓▓░░░░░████████░░░░░░▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░
+                 ↑              ↑           ↑
+                 │              │           │
+         "Revenue Q"    "Guidance Q"   "Competition Q"
+           (0.6)          (0.9)          (0.7)
+
+Legend: ░ = Low (0.0-0.3)  ▓ = Medium (0.3-0.7)  █ = High (0.7-1.0)
+
+═══════════════════════════════════════════════════════════════
+
+AGGREGATED VIEW (Across 10 Earnings Calls)
+
+Topic Hotspots:
+├── Revenue........... ▓▓▓▓▓░░░░░ (0.45)
+├── Margins........... ▓▓▓▓▓▓▓░░░ (0.62)
+├── Guidance.......... █████████░ (0.91)  ← ALWAYS triggers
+├── Competition....... ▓▓▓▓▓▓░░░░ (0.55)
+└── Debt.............. ░░░░░░░░░░ (0.12)
+
+Question Type Hotspots:
+├── Hard Questions.... █████████░ (0.88)
+├── Number Requests... ▓▓▓▓▓▓▓░░░ (0.65)
+├── Comparisons....... ▓▓▓▓░░░░░░ (0.38)
+└── Clarifications.... ░░░░░░░░░░ (0.15)
+
+```
+
+### Developer Handoff Notes
+- **Scope**: Aggregation and visualization data generation ONLY
+- **Inputs**: DetectedDelta array, TemporalAnomaly array
+- **Outputs**: HeatMapVisualizationData for SwiftUI rendering
+- **Does NOT include**: Actual UI rendering, detection logic
+- **Test criteria**: Can process 1000 data points in <100ms
+
+---
+
 ## MODULE 5: LLM Service Module
 
 ### Purpose
@@ -985,20 +1365,24 @@ class UserSettingsEntity: NSManagedObject {
 
 ### Development Costs (Contracting Out)
 
-| Module | Complexity | Est. Hours | Est. Cost |
-|--------|------------|------------|-----------|
-| Audio Capture | Medium | 40 | $4,000 |
-| Transcription | Medium | 60 | $6,000 |
-| Context Manager | Medium | 50 | $5,000 |
-| Delta Detection | High | 100 | $15,000 |
-| LLM Service | Medium | 40 | $4,000 |
-| UI/Display | High | 80 | $8,000 |
-| Backend API | Medium | 60 | $6,000 |
-| Persistence | Low | 20 | $2,000 |
-| Integration/QA | High | 80 | $8,000 |
-| **TOTAL** | | **530** | **~$58,000** |
+| Module | Complexity | Est. Hours | Est. Cost | Contractor? |
+|--------|------------|------------|-----------|-------------|
+| Audio Capture | Medium | 40 | $4,000 | Yes |
+| Transcription | Medium | 60 | $6,000 | Yes |
+| Context Manager | Medium | 50 | $5,000 | Yes |
+| **Delta Detection (4)** | High | 100 | INTERNAL | No - Core IP |
+| **Temporal Analyzer (4A)** | High | 80 | INTERNAL | No - Core IP |
+| **Heat Map Generator (4B)** | Medium | 40 | INTERNAL | No - Core IP |
+| LLM Service | Medium | 40 | $4,000 | Yes |
+| UI/Display | High | 80 | $8,000 | Yes |
+| Backend API | Medium | 60 | $6,000 | Yes |
+| Persistence | Low | 20 | $2,000 | Yes |
+| Integration/QA | High | 80 | $8,000 | Yes |
+| **CONTRACTED TOTAL** | | **430** | **~$43,000** | |
+| **INTERNAL (You)** | | **220** | N/A | Core IP |
 
 *Assumes $100/hr average contractor rate*
+*Internal modules (4, 4A, 4B) are the innovation - keep development in-house*
 
 ### Operating Costs (Per Month)
 
@@ -1030,9 +1414,18 @@ class UserSettingsEntity: NSManagedObject {
 | Dev A | Audio Capture | "Capture and buffer audio" |
 | Dev B | Transcription | "Convert audio to text with timestamps" |
 | Dev C | Context Manager | "Store session state and configs" |
-| Dev D | UI/Display | "Show cards and status from ViewModel" |
+| Dev D | UI/Display | "Show cards, heat maps, and status from ViewModel" |
 | Dev E | Backend API | "Proxy requests, store sessions" |
-| **You** | Delta Detection + LLM Integration | The actual innovation |
+| Dev F | Persistence | "CoreData storage for sessions and baselines" |
+| **You** | Delta Detection (4) | Core detection logic |
+| **You** | Temporal Analyzer (4A) | First-few-seconds response analysis |
+| **You** | Heat Map Generator (4B) | Pattern aggregation & visualization data |
+| **You** | LLM Integration | Nuance detection prompts |
+
+**The Core IP (Modules 4, 4A, 4B) stays with you:**
+- Delta Detection: What's missing vs. what's expected
+- Temporal Analyzer: Response latency, filler words, hedging spikes
+- Heat Map: Cross-session pattern aggregation
 
 **Nobody but you sees how the pieces combine to detect what's NOT being said.**
 
@@ -1042,6 +1435,43 @@ class UserSettingsEntity: NSManagedObject {
 
 1. **Validate MVP scope** - Is this the right feature set?
 2. **Choose tech stack** - SwiftUI vs UIKit, backend language
-3. **Spec out Delta Detection** - This is the IP, needs deep design
-4. **Find/vet developers** - For the modular pieces
-5. **Build Phase 1** - Get recording working first
+3. ~~Spec out Delta Detection~~ ✓ DONE - Module 4 specified
+4. ~~Spec out Temporal Analysis~~ ✓ DONE - Module 4A specified (first-few-seconds)
+5. ~~Spec out Heat Map Generation~~ ✓ DONE - Module 4B specified
+6. **Find/vet developers** - For the modular pieces (NOT the core IP modules)
+7. **Build Phase 1** - Get recording working first
+8. **Prototype Heat Map UI** - Validate visualization approach
+
+---
+
+## CONCEPT VALIDATION SUMMARY
+
+### What Makes This Novel
+
+| Existing Approaches | This System |
+|--------------------|-------------|
+| Analyze what IS said | Detect what ISN'T said |
+| Post-hoc sentiment | Real-time expectation gaps |
+| Single conversation | Cross-session heat maps |
+| Generic models | Per-speaker baselines |
+| Whole response analysis | First-few-seconds focus |
+
+### Scientific Support
+
+| Research Area | Finding | Application |
+|--------------|---------|-------------|
+| Microexpressions | ≤500ms expressions differentiate truth/lies | Temporal window analysis |
+| Cognitive Load | Response latency correlates with deception | Latency tracking |
+| Multimodal Detection | 96% accuracy with audio-visual fusion | Combined signals |
+| Earnings Call Analysis | CEO vocal patterns predict stock volatility | Financial use case |
+| Hedging Language | Increased hedging indicates uncertainty | Phrase detection |
+
+### Defensible Innovation
+
+The combination of:
+1. **Expectation modeling** (what SHOULD be said)
+2. **Temporal window focus** (first few seconds)
+3. **Cross-conversation aggregation** (heat maps)
+4. **Per-entity baselines** (personalized normal)
+
+...creates a defensible system that is genuinely novel in the market.
