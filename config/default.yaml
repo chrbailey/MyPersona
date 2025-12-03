@@ -1,0 +1,94 @@
+# MyPersona Configuration
+# Default settings for development
+
+environment: development
+debug: true
+log_level: INFO
+
+# API Server
+api:
+  host: "0.0.0.0"
+  port: 8000
+
+# X/Twitter API
+x_api:
+  max_requests_per_15min: 450
+  stream_reconnect_delay_seconds: 30
+  min_follower_count: 100
+  exclude_bots: true
+  languages:
+    - en
+
+# Market Data
+market_data:
+  provider: polygon  # polygon, alphavantage, yahoo
+  poll_interval_seconds: 60
+  pre_market_enabled: true
+  after_hours_enabled: true
+
+# LLM Configuration
+llm:
+  provider: anthropic
+  model: claude-sonnet-4-20250514
+  max_requests_per_minute: 50
+  max_tokens_per_request: 4096
+
+# Detection Settings
+detection:
+  snapshot_window_minutes: 15
+  baseline_lookback_days: 30
+
+  # Thresholds
+  topic_absence_threshold: 0.3
+  voice_silence_threshold_hours: 24.0
+  sentiment_deviation_threshold: 2.0
+  volume_collapse_threshold: 0.5
+
+  # Confidence filters
+  min_delta_confidence: 0.5
+  min_event_confidence: 0.6
+
+  # Clustering
+  delta_cluster_window_minutes: 60
+  min_cluster_size: 2
+
+# Tracked Entities (example)
+tracked_entities:
+  - entity_id: tesla
+    name: Tesla
+    entity_type: company
+    tickers:
+      - TSLA
+    usernames:
+      - Tesla
+      - elonmusk
+    keywords:
+      - Tesla
+      - Model S
+      - Model 3
+      - Model X
+      - Model Y
+      - Cybertruck
+    hashtags:
+      - Tesla
+      - TSLA
+    priority: 1
+    enabled: true
+
+  - entity_id: nvidia
+    name: NVIDIA
+    entity_type: company
+    tickers:
+      - NVDA
+    usernames:
+      - nvidia
+    keywords:
+      - NVIDIA
+      - GeForce
+      - CUDA
+      - Jensen Huang
+    hashtags:
+      - NVIDIA
+      - NVDA
+    priority: 1
+    enabled: true
