@@ -962,6 +962,273 @@ Question Type Hotspots:
 
 ---
 
+## MODULE 4C: Predictive Delta Engine
+
+### Purpose
+A **dual-system architecture** where System A observes reality and System B predicts what A should see. Deltas between prediction and observation trigger attention. This is the dynamic, learning evolution of static expectation matching.
+
+### Theoretical Foundation
+
+Based on **Predictive Coding** (neuroscience) and **Free Energy Principle** (Karl Friston):
+- The brain doesn't process everything - it only deeply processes **prediction errors**
+- We build internal models that predict sensory input
+- When prediction ≠ reality, attention fires
+
+### Mathematical Basis
+
+#### Information-Theoretic Surprise
+```
+Surprise(event) = -log₂(P(event))
+```
+
+| Probability | Surprise (bits) | Interpretation |
+|-------------|-----------------|----------------|
+| 0.90 | 0.15 bits | Almost expected |
+| 0.50 | 1.00 bits | Coin flip |
+| 0.25 | 2.00 bits | Somewhat surprising |
+| 0.10 | 3.32 bits | Quite surprising |
+| 0.01 | 6.64 bits | Highly anomalous |
+
+#### KL Divergence (Distribution Mismatch)
+```
+KL(Observed || Predicted) = Σ Observed(x) × log(Observed(x) / Predicted(x))
+```
+Measures how different the actual distribution is from the predicted distribution.
+
+#### Exponential Moving Average (Learning)
+```
+NewBelief = α × Observation + (1-α) × OldBelief
+```
+Where α = 0.1 (slow, stable learning) to 0.3 (fast, reactive)
+
+### Interface Contract
+
+```swift
+// PredictiveDeltaEngine.swift
+
+protocol PredictiveDeltaEngineDelegate: AnyObject {
+    func engineDidDetectDelta(_ delta: PredictionDelta)
+    func engineDidUpdateModel()
+}
+
+/// System B's prediction for next observation window
+struct Prediction {
+    let id: UUID
+    let timestamp: Date
+    let targetWindow: TimeInterval           // How far ahead (e.g., 30s)
+
+    // Multi-signal predictions
+    let topicDistribution: [String: Float]   // Topic → probability (sums to 1.0)
+    let latencyPrediction: LatencyRange
+    let fillerPrediction: FillerRange
+    let sentimentPrediction: SentimentRange
+    let trajectoryPrediction: TrajectoryPrediction
+
+    let confidence: Float                    // 0.0 - 1.0
+}
+
+struct LatencyRange {
+    let minMs: Int
+    let maxMs: Int
+    let meanMs: Int
+    let stdDevMs: Int
+}
+
+struct FillerRange {
+    let expectedCount: Float
+    let stdDev: Float
+}
+
+struct SentimentRange {
+    let min: Float
+    let max: Float
+    let expected: Float
+}
+
+struct TrajectoryPrediction {
+    let mostLikely: TrajectoryType
+    let probabilities: [TrajectoryType: Float]
+}
+
+enum TrajectoryType: String {
+    case deepening       // Going deeper into current topic
+    case transitioning   // Moving to related topic
+    case pivoting        // Sharp change of direction
+    case concluding      // Wrapping up
+    case deflecting      // Avoiding/evading
+}
+
+/// System A's observation of what actually happened
+struct Observation {
+    let id: UUID
+    let timestamp: Date
+    let duration: TimeInterval
+
+    let topicsMentioned: [String: Int]       // Topic → mention count
+    let responseLatencyMs: Int
+    let fillerCount: Int
+    let hedgingCount: Int
+    let sentiment: Float
+    let trajectory: TrajectoryType
+
+    let rawTranscript: String
+}
+
+/// Delta between prediction and observation
+struct PredictionDelta {
+    let id: UUID
+    let predictionId: UUID
+    let observationId: UUID
+    let timestamp: Date
+
+    // Per-signal surprise (in bits)
+    let topicSurprise: Float
+    let latencySurprise: Float
+    let fillerSurprise: Float
+    let sentimentSurprise: Float
+    let trajectorySurprise: Float
+
+    // Combined weighted score (0.0 - 5.0)
+    let combinedDeltaScore: Float
+
+    // Human-readable explanation
+    let explanation: DeltaExplanation
+}
+
+struct DeltaExplanation {
+    let headline: String                     // "Unexpected topic pivot"
+    let details: [String]                    // Bullet points
+    let possibleCauses: [String]             // What might explain this
+    let confidence: Float
+}
+
+protocol PredictiveDeltaEngineProtocol {
+    var delegate: PredictiveDeltaEngineDelegate? { get set }
+
+    /// Process new observation, compare to prediction, update model
+    func processObservation(_ observation: Observation)
+
+    /// Get current prediction for next window
+    func getCurrentPrediction() -> Prediction?
+
+    /// Get model statistics (for debugging/tuning)
+    func getModelStats() -> WorldModelStats
+
+    /// Reset model to defaults
+    func resetModel()
+}
+```
+
+### World Model Structure
+
+```swift
+// WorldModel.swift (INTERNAL - core IP)
+
+class WorldModel {
+    // Topic transition probabilities: P(next_topic | current_topic)
+    private var topicTransitions: [String: [String: Float]]
+
+    // Per-speaker learned baselines
+    private var speakerModels: [String: SpeakerModel]
+
+    // Domain-specific patterns (earnings call vs interview)
+    private var domainPatterns: [String: DomainModel]
+
+    // Learning rate
+    private let alpha: Float = 0.1
+
+    /// Predict next state given current state
+    func predict(currentState: ConversationState) -> Prediction
+
+    /// Update model based on observation
+    func update(observation: Observation, prediction: Prediction)
+}
+
+struct SpeakerModel {
+    var sampleCount: Int = 0
+    var avgLatencyMs: Int = 500
+    var latencyStdDev: Int = 200
+    var avgFillersPerResponse: Float = 1.0
+    var fillerStdDev: Float = 0.5
+}
+```
+
+### Combined Delta Calculation
+
+```swift
+// DeltaCalculator.swift (INTERNAL)
+
+struct SignalWeights {
+    let topic: Float = 0.30      // What they talk about
+    let latency: Float = 0.20    // Hesitation
+    let filler: Float = 0.15     // Cognitive load
+    let sentiment: Float = 0.20  // Emotional state
+    let trajectory: Float = 0.15 // Direction changes
+    // Total = 1.00
+}
+
+func computeCombinedDelta(
+    topicSurprise: Float,
+    latencySurprise: Float,
+    fillerSurprise: Float,
+    sentimentSurprise: Float,
+    trajectorySurprise: Float
+) -> Float {
+    let w = SignalWeights()
+    return w.topic * topicSurprise
+         + w.latency * latencySurprise
+         + w.filler * fillerSurprise
+         + w.sentiment * sentimentSurprise
+         + w.trajectory * trajectorySurprise
+}
+```
+
+### Prediction-Observation Cycle
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ONE TIMESTEP CYCLE                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  1. PREDICT: B outputs P(t+1) given current state          │
+│                         │                                   │
+│                         ▼                                   │
+│  2. OBSERVE: A records what actually happens S(t+1)        │
+│                         │                                   │
+│                         ▼                                   │
+│  3. COMPARE: Δ = Surprise(P(t+1), S(t+1))                  │
+│                         │                                   │
+│                         ▼                                   │
+│  4. ALERT: If Δ > threshold, fire attention                │
+│                         │                                   │
+│                         ▼                                   │
+│  5. UPDATE: B.model ← α × S(t+1) + (1-α) × B.model         │
+│                         │                                   │
+│                         ▼                                   │
+│  6. REPEAT with S(t+1) as new current state                │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Why This Matters
+
+| Static Detection (4, 4A, 4B) | Predictive Detection (4C) |
+|------------------------------|---------------------------|
+| "Revenue not mentioned" | "Given momentum, expected pivot to revenue - didn't happen" |
+| Fixed thresholds | Learned, adaptive thresholds |
+| Per-session | Cross-session learning |
+| Binary: missing/present | Probabilistic: how surprising? |
+
+### Developer Handoff Notes
+- **Scope**: Predictive model + delta calculation ONLY
+- **Inputs**: Observation stream, ConversationState
+- **Outputs**: Prediction, PredictionDelta
+- **Does NOT include**: UI, persistence, audio/transcription
+- **CRITICAL**: This is advanced core IP - highest protection level
+- **Test criteria**: Model converges within 5 observations, <50ms per cycle
+
+---
+
 ## MODULE 5: LLM Service Module
 
 ### Purpose
@@ -1373,16 +1640,17 @@ class UserSettingsEntity: NSManagedObject {
 | **Delta Detection (4)** | High | 100 | INTERNAL | No - Core IP |
 | **Temporal Analyzer (4A)** | High | 80 | INTERNAL | No - Core IP |
 | **Heat Map Generator (4B)** | Medium | 40 | INTERNAL | No - Core IP |
+| **Predictive Engine (4C)** | Very High | 120 | INTERNAL | No - Core IP |
 | LLM Service | Medium | 40 | $4,000 | Yes |
 | UI/Display | High | 80 | $8,000 | Yes |
 | Backend API | Medium | 60 | $6,000 | Yes |
 | Persistence | Low | 20 | $2,000 | Yes |
 | Integration/QA | High | 80 | $8,000 | Yes |
 | **CONTRACTED TOTAL** | | **430** | **~$43,000** | |
-| **INTERNAL (You)** | | **220** | N/A | Core IP |
+| **INTERNAL (You)** | | **340** | N/A | Core IP |
 
 *Assumes $100/hr average contractor rate*
-*Internal modules (4, 4A, 4B) are the innovation - keep development in-house*
+*Internal modules (4, 4A, 4B, 4C) are the innovation - keep development in-house*
 
 ### Operating Costs (Per Month)
 
@@ -1420,12 +1688,14 @@ class UserSettingsEntity: NSManagedObject {
 | **You** | Delta Detection (4) | Core detection logic |
 | **You** | Temporal Analyzer (4A) | First-few-seconds response analysis |
 | **You** | Heat Map Generator (4B) | Pattern aggregation & visualization data |
+| **You** | Predictive Engine (4C) | Dual-system prediction + learning |
 | **You** | LLM Integration | Nuance detection prompts |
 
-**The Core IP (Modules 4, 4A, 4B) stays with you:**
+**The Core IP (Modules 4, 4A, 4B, 4C) stays with you:**
 - Delta Detection: What's missing vs. what's expected
 - Temporal Analyzer: Response latency, filler words, hedging spikes
 - Heat Map: Cross-session pattern aggregation
+- Predictive Engine: Dynamic world model, surprise-based detection
 
 **Nobody but you sees how the pieces combine to detect what's NOT being said.**
 
@@ -1438,9 +1708,11 @@ class UserSettingsEntity: NSManagedObject {
 3. ~~Spec out Delta Detection~~ ✓ DONE - Module 4 specified
 4. ~~Spec out Temporal Analysis~~ ✓ DONE - Module 4A specified (first-few-seconds)
 5. ~~Spec out Heat Map Generation~~ ✓ DONE - Module 4B specified
-6. **Find/vet developers** - For the modular pieces (NOT the core IP modules)
-7. **Build Phase 1** - Get recording working first
-8. **Prototype Heat Map UI** - Validate visualization approach
+6. ~~Spec out Predictive Engine~~ ✓ DONE - Module 4C specified (dual-system)
+7. **Find/vet developers** - For the modular pieces (NOT the core IP modules)
+8. **Build Phase 1** - Get recording working first
+9. **Prototype Heat Map UI** - Validate visualization approach
+10. **Critical review** - See PhD-level analysis document
 
 ---
 
