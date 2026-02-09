@@ -22,6 +22,17 @@ from .belief import (
 )
 
 
+TOPIC_TO_REWARD_MAP = {
+    # achievement
+    "shipping": "completion", "goals": "goals", "delivery": "delivery",
+    "project": "completion", "deadline": "completion", "performance": "achievement",
+    # social
+    "team": "recognition", "meeting": "feedback", "review": "feedback",
+    # security
+    "budget": "planning", "documentation": "planning",
+}
+
+
 # =============================================================================
 # MOOD DETECTOR
 # =============================================================================
@@ -39,6 +50,11 @@ class MoodDetector:
         "v_sadness":      (r'\b(sad|depress|disappoint|heartbreak|miserable)\w*', -0.4),
         "v_profanity":    (r'\b(damn|crap|shit|wtf|fuck|ugh|ffs)\b', -0.3),
         "v_defeat":       (r"\b(give up|hopeless|pointless|impossible|can't win)\b", -0.5),
+        "v_stress":       (r'\b(stress|overwhelm|burnout|burned out|burnt out)\w*', -0.35),
+        "v_dread":        (r'\b(dread|doom|foreboding)\w*', -0.4),
+        "v_eager":        (r'\b(excited|thrilled|passionate|energized|pumped)\b', +0.35),
+        "v_love":         (r'\b(love|adore)\b', +0.3),
+        "v_hope":         (r'\b(hopeful|optimistic|looking forward)\b', +0.25),
     }
 
     AROUSAL_PATTERNS = {
@@ -51,6 +67,8 @@ class MoodDetector:
         "a_hedging":      (r'\b(maybe|perhaps|possibly|might|not sure)\b', -0.15),
         "a_resignation":  (r'\b(whatever|fine|okay I guess|suppose)\b', -0.25),
         "a_brevity":      (r'^.{1,10}$', -0.1),
+        "a_pressure":     (r'\b(deadline|pressure|crunch|rush|time.?sensitive)\b', +0.25),
+        "a_overwhelm":    (r"\b(overwhelm|too much|can't keep up|drowning)\w*", +0.2),
     }
 
     def detect(self, text: str) -> MoodState:

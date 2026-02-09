@@ -19,4 +19,4 @@ dev = [
 ]
 
 [project.scripts]
-mypersona = "src.main:main"
+mypersona = "src.agent:main"

@@ -26,7 +26,7 @@ from .engines import (
     MoodDetector, BeliefExtractor,
     AuthorityGraph, ComplianceDetector, RewardModel,
     ApproachAvoidanceDetector, PersonaEngine, GapAnalyzer,
-    compute_encoding_weight,
+    compute_encoding_weight, TOPIC_TO_REWARD_MAP,
 )
 from .memory import (
     MemoryStore, TimelineManager,
@@ -65,8 +65,14 @@ When responding:
   separately as Engine 2 signals — the user may not articulate these
 - When you detect a significant gap between Engine 1 and Engine 2 on a topic,
   surface it gently. The user may not be conscious of the tension. Frame it as
-  an observation, not a diagnosis.
+  an observation, not a diagnosis: "I notice your stated priority (documentation)
+  and what energizes you (shipping) are pulling in different directions."
 - NEVER be judgmental about the gap. Both engines are valid.
+- When authority sources are trust-discounted, reflect that nuance. A boss with
+  trust_weight=0.8 shifts Engine 1 beliefs but doesn't override them. Lower-trust
+  sources (ambient media, peer gossip) get heavily discounted.
+- Be honest about uncertainty. If you have limited data, say so: "I've only seen
+  a few interactions on this topic — my read could shift as I learn more about you."
 - If a governance hold is created, explain it simply
 
 IMPORTANT: You track two kinds of uncertainty for every belief:
@@ -87,47 +93,59 @@ The following YAML describes the user's current emotional context:
 # =============================================================================
 
 AGENT_TOOLS = [
-    {"name": "detect_mood", "description": "Detect emotional state from text",
+    {"name": "detect_mood",
+     "description": "Analyze emotional signals in a user message. Returns valence, arousal, quadrant, and confidence. Use this to get a detailed read on how the user is feeling right now.",
      "input_schema": {"type": "object", "properties": {"message": {"type": "string"}},
                       "required": ["message"]}},
-    {"name": "get_emotional_timeline", "description": "Get mood history for a topic",
+    {"name": "get_emotional_timeline",
+     "description": "Get the user's mood history for a topic over time. Shows emotional trajectory and trends — useful for spotting shifts in how they feel about recurring subjects.",
      "input_schema": {"type": "object", "properties": {
          "topic": {"type": "string"}, "days_back": {"type": "integer", "default": 30}}}},
-    {"name": "query_beliefs", "description": "Query current beliefs",
+    {"name": "query_beliefs",
+     "description": "Query the user's current beliefs with Bayesian confidence levels. Can filter by category and minimum probability. Includes epistemic vs aleatoric uncertainty decomposition.",
      "input_schema": {"type": "object", "properties": {
          "category": {"type": "string"}, "min_probability": {"type": "number", "default": 0.0}}}},
-    {"name": "update_belief", "description": "Update a belief",
+    {"name": "update_belief",
+     "description": "Update a belief's strength — confirm reinforces it, reject weakens it, weaken reduces confidence without full rejection.",
      "input_schema": {"type": "object", "properties": {
          "belief_id": {"type": "string"}, "action": {"type": "string", "enum": ["confirm", "reject", "weaken"]},
          "strength": {"type": "number", "default": 5.0}}, "required": ["belief_id", "action"]}},
-    {"name": "search_memories", "description": "Search emotional memories",
+    {"name": "search_memories",
+     "description": "Search emotional memories by semantic similarity. Returns memories with their mood state at time of encoding, trust zone, and encoding weight.",
      "input_schema": {"type": "object", "properties": {
          "query": {"type": "string"}, "include_mood": {"type": "boolean", "default": True},
          "limit": {"type": "integer", "default": 5}}, "required": ["query"]}},
-    {"name": "store_emotional_memory", "description": "Store an emotional memory",
+    {"name": "store_emotional_memory",
+     "description": "Store an emotional memory with the current mood state attached. Subject to governance — may be held for review if encoding weight is high or content is sensitive.",
      "input_schema": {"type": "object", "properties": {
          "content": {"type": "string"}, "topic_tags": {"type": "array", "items": {"type": "string"}}},
          "required": ["content"]}},
-    {"name": "manage_authority", "description": "Add or update an authority source",
+    {"name": "manage_authority",
+     "description": "Add or update an authority source in the trust hierarchy. Authority sources feed Engine 1 (Persona) — their influence is trust-discounted, not taken at face value.",
      "input_schema": {"type": "object", "properties": {
          "source_id": {"type": "string"}, "name": {"type": "string"},
          "tier": {"type": "string", "enum": ["formal", "institutional", "personal", "peer", "ambient"]},
          "trust_weight": {"type": "number"}, "influence_topics": {"type": "array", "items": {"type": "string"}}},
          "required": ["source_id", "name", "tier"]}},
-    {"name": "get_influence_analysis", "description": "Analyze influence sources and compliance",
+    {"name": "get_influence_analysis",
+     "description": "Analyze all influence sources, compliance tendency, and reward profile. Shows who shapes the user's Persona (Engine 1) and what reward patterns drive Engine 2.",
      "input_schema": {"type": "object", "properties": {
          "topic": {"type": "string"}, "include_conflicts": {"type": "boolean", "default": True}}}},
-    {"name": "get_gap_analysis", "description": "Get dual-engine gap analysis",
+    {"name": "get_gap_analysis",
+     "description": "Get dual-engine gap analysis. Surfaces 'theatre' — where stated priorities (Engine 1: Persona) and actual engagement (Engine 2: Reward) diverge. The gap predicts behavior better than either engine alone.",
      "input_schema": {"type": "object", "properties": {
          "topic": {"type": "string"}, "include_trend": {"type": "boolean", "default": True}}}},
-    {"name": "explain_behavior", "description": "Explain seemingly irrational behavior via engine gap",
+    {"name": "explain_behavior",
+     "description": "Explain seemingly irrational behavior using the gap between Persona and Reward engines. Uses the divergence pattern to generate an explanation for why the user acts against their stated values.",
      "input_schema": {"type": "object", "properties": {
          "behavior": {"type": "string"}, "context": {"type": "string", "default": ""}},
          "required": ["behavior"]}},
-    {"name": "list_holds", "description": "List governance holds",
+    {"name": "list_holds",
+     "description": "List governance holds — actions that were paused for human review before execution.",
      "input_schema": {"type": "object", "properties": {
          "include_resolved": {"type": "boolean", "default": False}}}},
-    {"name": "resolve_hold", "description": "Resolve a governance hold",
+    {"name": "resolve_hold",
+     "description": "Resolve a governance hold by approving or rejecting the paused action.",
      "input_schema": {"type": "object", "properties": {
          "hold_id": {"type": "string"}, "decision": {"type": "string", "enum": ["approve", "reject"]},
          "reason": {"type": "string", "default": ""}}, "required": ["hold_id", "decision"]}},
@@ -286,7 +304,8 @@ class EmotionalMemoryAgent:
         # 8. Update timeline and reward model
         self.timeline.record(self.current_mood, topics, self.session_id)
         for topic in topics:
-            self.reward.observe(topic, self.current_mood.valence)
+            reward_cat = TOPIC_TO_REWARD_MAP.get(topic, topic)
+            self.reward.observe(reward_cat, self.current_mood.valence)
 
         # 9. Compute encoding weight (was missing — now wired up)
         ew = compute_encoding_weight(

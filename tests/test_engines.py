@@ -102,6 +102,15 @@ def test_explain_behavior():
     assert "Persona Engine" in explanation
 
 
+def test_reward_model_with_topic_mapping():
+    from src.engines import TOPIC_TO_REWARD_MAP
+    rm = RewardModel(_tmp_dir())
+    for _ in range(6):
+        cat = TOPIC_TO_REWARD_MAP.get("shipping", "shipping")
+        rm.observe(cat, 0.6)
+    assert rm.reward_type == RewardType.ACHIEVEMENT
+
+
 def test_encoding_weight():
     mood = MoodState(valence=-0.3, arousal=0.7, confidence=0.8,
                      quadrant=EmotionalQuadrant.STRESSED, signals=[])

@@ -56,3 +56,16 @@ def test_confidence_increases_with_signals():
     few = md.detect("ok")
     many = md.detect("This is absolutely amazing! I'm so grateful and excited!!")
     assert many.confidence >= few.confidence
+
+
+def test_detect_stressed_direct():
+    md = MoodDetector()
+    mood = md.detect("I'm stressed about the deadline")
+    assert mood.valence < 0
+    assert mood.arousal > 0
+
+
+def test_detect_excited_direct():
+    md = MoodDetector()
+    mood = md.detect("I'm excited about this project!")
+    assert mood.valence > 0
