@@ -550,6 +550,126 @@ class EmotionalMemoryAgent:
 
 
 # =============================================================================
+# MOOD DISPLAY
+# =============================================================================
+
+QUADRANT_STYLE = {
+    "excited":  ("green",  "++"),
+    "calm":     ("blue",   "~~"),
+    "stressed": ("red",    "!!"),
+    "low":      ("yellow", ".."),
+    "neutral":  ("dim",    "--"),
+}
+
+CIRCUMPLEX = [
+    # 5x5 grid: rows = arousal (high to low), cols = valence (neg to pos)
+    # Each cell: (valence_range, arousal_range, label)
+    ["  tense ", " nervous", "  alert ", " excited", "  elated"],
+    [" annoyed", " uneasy ", " focused", "  happy ", "thrilled"],
+    ["  bored ", "   meh  ", "  -YOU- ", " content", " pleased"],
+    ["  tired ", "  dull  ", "  calm  ", " relaxed", " serene "],
+    ["  spent ", "  numb  ", " drowsy ", " tranqul", "  bliss "],
+]
+
+
+def _gauge_bar(value: float, width: int = 20, neg_color: str = "red",
+               pos_color: str = "green") -> str:
+    """Render a -1..+1 gauge as a text bar: [====|====]"""
+    clamped = max(-1.0, min(1.0, value))
+    mid = width // 2
+    fill = int(abs(clamped) * mid)
+    bar = list("." * width)
+    bar[mid] = "|"
+    if clamped < 0:
+        for i in range(mid - fill, mid):
+            bar[i] = "="
+        color = neg_color
+    elif clamped > 0:
+        for i in range(mid + 1, mid + 1 + fill):
+            bar[i] = "="
+        color = pos_color
+    else:
+        color = "dim"
+    inner = "".join(bar)
+    return f"[{color}][{inner}][/{color}]"
+
+
+def _circumplex_marker(valence: float, arousal: float) -> str:
+    """Render a 5x5 circumplex grid with the current position marked."""
+    # Map valence/arousal (-1..+1) to grid coords (0..4)
+    col = min(4, max(0, int((valence + 1) / 2 * 4.99)))
+    row = min(4, max(0, int((1 - arousal) / 2 * 4.99)))  # high arousal = top
+    lines = []
+    for r, cells in enumerate(CIRCUMPLEX):
+        parts = []
+        for c, label in enumerate(cells):
+            if r == row and c == col:
+                parts.append(f"[bold white on blue]{label}[/]")
+            else:
+                parts.append(f"[dim]{label}[/]")
+        lines.append(" ".join(parts))
+    return "\n".join(lines)
+
+
+def _render_mood_panel(mood: MoodState, agent: 'EmotionalMemoryAgent') -> str:
+    """Build the full mood status display."""
+    from rich.text import Text
+
+    q = mood.quadrant.value
+    color, icon = QUADRANT_STYLE.get(q, ("dim", "--"))
+    lines = []
+
+    # Header: quadrant + confidence
+    lines.append(f"  [{color} bold]{icon} {q.upper()}[/{color} bold]"
+                 f"  [dim]confidence {mood.confidence:.0%}[/dim]")
+
+    # Gauges
+    lines.append(f"  valence  {_gauge_bar(mood.valence, 20, 'red', 'green')}"
+                 f"  {mood.valence:+.2f}")
+    lines.append(f"  arousal  {_gauge_bar(mood.arousal, 20, 'blue', 'yellow')}"
+                 f"  {mood.arousal:+.2f}")
+
+    # Signals
+    if mood.signals:
+        sig_str = " ".join(f"[dim]{s}[/dim]" for s in mood.signals[:6])
+        lines.append(f"  signals  {sig_str}")
+
+    # Reward profile (if enough data)
+    scores = agent.reward.get_scores()
+    if scores["observations"] >= 3:
+        dom = scores["dominant"]
+        lines.append(f"  reward   [dim]ach={scores['achievement']:.1f}"
+                     f" soc={scores['social_approval']:.1f}"
+                     f" aut={scores['autonomy']:.1f}"
+                     f" sec={scores['security']:.1f}"
+                     f"  dominant=[/dim][bold]{dom}[/bold]")
+
+    # Gap alerts
+    if agent.current_gap:
+        for gap in agent.current_gap.topic_gaps[:3]:
+            if gap.gap_magnitude > 0.15:
+                sev_color = {"low": "yellow", "moderate": "red",
+                             "high": "red bold", "critical": "white on red"
+                             }.get(gap.conflict_severity, "dim")
+                lines.append(
+                    f"  gap      [dim]{gap.topic}:[/dim] "
+                    f"persona={gap.persona_opinion:.0%} "
+                    f"reward={gap.reward_opinion:.0%} "
+                    f"[{sev_color}]{gap.conflict_severity} "
+                    f"({gap.gap_magnitude:.0%})[/{sev_color}]")
+
+    # Trend
+    trend = agent.timeline.get_trend()
+    if trend.get("direction") and trend["direction"] != "stable":
+        arrow = {"improving": "[green]trending up[/green]",
+                 "declining": "[red]trending down[/red]"}.get(
+            trend["direction"], f"[dim]{trend['direction']}[/dim]")
+        lines.append(f"  trend    {arrow}")
+
+    return "\n".join(lines)
+
+
+# =============================================================================
 # CLI
 # =============================================================================
 
@@ -573,8 +693,9 @@ def main():
     console.print(Panel(
         Text.from_markup(
             "[bold]Emotional Memory Agent[/bold]\n"
-            "Dual-engine: tracks what you [italic]should[/italic] want vs what you [italic]actually[/italic] want\n"
-            "Type 'quit' to exit, 'holds' to see governance holds"
+            "Dual-engine: tracks what you [italic]should[/italic] want "
+            "vs what you [italic]actually[/italic] want\n"
+            "Commands: [bold]quit[/bold] | [bold]holds[/bold] | [bold]mood[/bold]"
         ),
         border_style="blue",
     ))
@@ -591,6 +712,7 @@ def main():
         if user_input.lower() in ("quit", "exit", "q"):
             console.print("[dim]Goodbye.[/dim]")
             break
+
         if user_input.lower() == "holds":
             holds = agent.governance.pending_holds()
             if holds:
@@ -600,31 +722,35 @@ def main():
                 console.print("  [dim]No pending holds.[/dim]")
             continue
 
-        mood = agent.mood_detector.detect(user_input)
-        mood_indicator = {
-            "excited": "[green]excited[/green]", "calm": "[blue]calm[/blue]",
-            "stressed": "[red]stressed[/red]", "low": "[yellow]low[/yellow]",
-            "neutral": "[dim]neutral[/dim]",
-        }.get(mood.quadrant.value, mood.quadrant.value)
-        console.print(f"  [dim]mood: {mood_indicator} "
-                      f"(v={mood.valence:+.2f} a={mood.arousal:+.2f} "
-                      f"conf={mood.confidence:.0%})[/dim]")
+        if user_input.lower() == "mood":
+            if agent.current_mood:
+                console.print(Panel(
+                    _circumplex_marker(agent.current_mood.valence,
+                                      agent.current_mood.arousal),
+                    title="[bold]Circumplex Position[/bold]",
+                    border_style="blue", width=60,
+                ))
+            else:
+                console.print("  [dim]No mood data yet. Say something first.[/dim]")
+            continue
 
         try:
             response = agent.process_message(user_input)
-            console.print(f"\n[bold green]Agent:[/bold green] {response}")
         except Exception as e:
             console.print(f"\n[red]Error: {e}[/red]")
+            continue
 
-        if agent.current_gap and agent.current_gap.significant_gaps:
-            for gap in agent.current_gap.significant_gaps[:2]:
-                console.print(
-                    f"  [dim]gap: {gap.topic} "
-                    f"(persona={gap.persona_opinion:.0%} "
-                    f"reward={gap.reward_opinion:.0%} "
-                    f"gap={gap.gap_magnitude:.0%} "
-                    f"{gap.conflict_severity})[/dim]"
-                )
+        # Mood status panel
+        if agent.current_mood:
+            console.print(Panel(
+                _render_mood_panel(agent.current_mood, agent),
+                title="[bold]Mood[/bold]",
+                border_style=QUADRANT_STYLE.get(
+                    agent.current_mood.quadrant.value, ("dim", "--"))[0],
+                width=72,
+            ))
+
+        console.print(f"\n[bold green]Agent:[/bold green] {response}")
 
 
 if __name__ == "__main__":
