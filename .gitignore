@@ -1,0 +1,23 @@
+# Environment
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Data (local persistence)
+data/*.json
+data/*.jsonl
+!data/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+# Build
+*.egg-info/
+dist/
+build/
