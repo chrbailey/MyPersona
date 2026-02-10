@@ -203,7 +203,7 @@ class MoodDetector:
 
         return MoodState(
             valence=valence, arousal=arousal,
-            confidence=min(0.80, 0.55 + len(signals) * 0.06),
+            confidence=min(0.79, 0.75 + len(signals) * 0.04),
             quadrant=quadrant, signals=signals,
         )
 
