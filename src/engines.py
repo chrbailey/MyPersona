@@ -59,12 +59,21 @@ class MoodDetector:
         "v_eager":        (r'\b(excited|thrilled|passionate|energized|pumped)\b', +0.35),
         "v_love":         (r'\b(love|adore)\b', +0.3),
         "v_hope":         (r'\b(hopeful|optimistic|looking forward)\b', +0.25),
+        "v_disaster":     (r'\b(disaster|catastrophe|nightmare|terrible|horrible|awful)\b', -0.4),
+        "v_tired":        (r'\b(tired|exhausted|drained|fatigued)\b', -0.25),
+        "v_apathy":       (r"\b(don't care|doesn't matter|who cares|meh|blah)\b", -0.2),
+        "v_stuck":        (r'\b(stuck|stalled|blocked|no progress)\b', -0.2),
+        "v_content":      (r'\b(content|peaceful|serene|tranquil|at ease)\b', +0.15),
+        "v_smooth":       (r'\b(smoothly|steady|stable|on track|under control)\b', +0.15),
+        "v_mild_neg":     (r'\b(behind|complicated|not ideal|tight|piling up|keeps? changing|scope creep)\b', -0.15),
+        "v_resigned":     (r'\b(whatever|suppose|I guess)\b', -0.1),
+        "v_struggling":   (r"\b(can't deal|can't keep up|hard to focus|interruptions?|dropped .* on me|insane)\b", -0.2),
     }
 
     AROUSAL_PATTERNS = {
         "a_caps":         (r'[A-Z]{4,}', +0.3),
         "a_exclaim":      (r'!{2,}', +0.25),
-        "a_urgency":      (r'\b(URGENT|ASAP|NOW|HELP|emergency)\b', +0.4),
+        "a_urgency":      (r'\b(URGENT|ASAP|emergency)\b', +0.4),
         "a_intensity":    (r'\b(extremely|absolutely|totally|completely)\b', +0.2),
         "a_repetition":   (r'(.)\1{3,}', +0.15),
         "a_ellipsis":     (r'\.{3,}', -0.2),
@@ -75,32 +84,83 @@ class MoodDetector:
         "a_overwhelm":    (r"\b(overwhelm|too much|can't keep up|drowning)\w*", +0.2),
         "a_shock":        (r"\b(shock|can't believe|what the|oh my god|omg)\b", +0.35),
         "a_crisis":       (r'\b(crisis|emergency|catastroph|disaster|laid off|fired)\w*', +0.3),
+        "a_disengaged":   (r"\b(don't care|doesn't matter|who cares|meh|blah)\b", -0.2),
+        "a_fatigue":      (r'\b(tired|exhausted|drained|worn out|burned? out)\b', -0.15),
+        "a_monotone":     (r'\b(same old|another day|going through the motions)\b', -0.2),
+        "a_calm":         (r'\b(content|peaceful|serene|tranquil|at ease|smoothly|steady|stable|on track|under control|no complaints|no issues|quiet)\b', -0.2),
+        "a_mild_tension": (r'\b(behind|complicated|escalat|running out|piling up|tight timeline|growing scope|keeps? changing)\b', +0.15),
     }
+
+    NEGATORS = re.compile(r"\b(not|n't|no|never|neither|nor)\b", re.IGNORECASE)
+
+    SARCASM_MARKERS = re.compile(
+        r'\b(oh great|just what I needed|how (?:delightful|wonderful|lovely)|yeah right|sure thing)\b'
+        r'|(?:great|wonderful|fantastic|amazing|shocking|brilliant|lovely)\s*[.,!]\s*(?:the|another|my|this|production|nothing|nobody)'
+        r'|(?:thanks?\s+so\s+much|really\s+appreciate)\s+(?:for\s+the\s+extra|for\s+(?:another|this|the\s+additional))',
+        re.IGNORECASE
+    )
+
+    def _is_negated(self, text: str, match_start: int) -> bool:
+        prefix = text[:match_start]
+        words = prefix.split()
+        window = ' '.join(words[-3:]) if len(words) >= 3 else ' '.join(words)
+        return bool(self.NEGATORS.search(window))
 
     def detect(self, text: str) -> MoodState:
         valence = 0.0
         arousal = 0.0
         signals = []
 
+        # Strip quoted speech so we don't detect someone else's emotions
+        # Use double quotes only (apostrophes in contractions like "can't" are not quotes)
+        text_clean = re.sub(r'"([^"]*)"', " ", text)
+        # Smart quotes (curly)
+        text_clean = re.sub(r"[\u201c\u201d].*?[\u201c\u201d]", " ", text_clean)
+        # Single quotes only when preceded by whitespace/start (not mid-word contractions)
+        text_clean = re.sub(r"(?:^|\s)'([^']*)'(?:\s|[.,!?]|$)", " ", text_clean)
+        text_clean = re.sub(r"[\u2018\u2019].*?[\u2018\u2019]", " ", text_clean)
+
         for name, (pattern, value) in self.VALENCE_PATTERNS.items():
-            if re.search(pattern, text, re.IGNORECASE):
-                signals.append(name)
-                valence += value
+            match = re.search(pattern, text_clean, re.IGNORECASE)
+            if match:
+                if self._is_negated(text_clean, match.start()):
+                    signals.append(f"{name}_neg")
+                    valence += value * -0.5
+                else:
+                    signals.append(name)
+                    valence += value
 
         for name, (pattern, value) in self.AROUSAL_PATTERNS.items():
             flags = 0 if name == "a_caps" else re.IGNORECASE
-            if re.search(pattern, text, flags):
+            if re.search(pattern, text_clean, flags):
                 signals.append(name)
                 arousal += value
 
+        # Use original text for word-count check (quotes are real content)
         if len(text.split()) > 50:
             arousal += 0.1
             signals.append("a_long_message")
 
+        # Sarcasm flip: surface-positive + complaint structure
+        if self.SARCASM_MARKERS.search(text_clean) and valence >= 0:
+            if valence > 0:
+                valence = valence * -0.7
+            else:
+                valence = -0.2  # push neutral sarcasm negative
+            arousal = max(arousal, 0.1)
+            signals.append("sarcasm_flip")
+
+        # High-arousal stress inference: crisis/pressure/urgency signals with
+        # near-zero valence implies negative situation, not excitement
+        stress_signals = {"a_urgency", "a_pressure", "a_overwhelm", "a_crisis", "a_shock"}
+        if arousal > 0.2 and abs(valence) < 0.1 and stress_signals & set(signals):
+            valence = -0.15
+            signals.append("stress_inferred")
+
         valence = max(-1.0, min(1.0, valence))
         arousal = max(-1.0, min(1.0, arousal))
 
-        if abs(valence) < 0.1 and abs(arousal) < 0.1:
+        if abs(valence) < 0.15 and abs(arousal) < 0.15:
             quadrant = EmotionalQuadrant.NEUTRAL
         elif valence >= 0 and arousal >= 0:
             quadrant = EmotionalQuadrant.EXCITED
