@@ -6,6 +6,8 @@ MyPersona is a Python library and MCP server that gives AI agents emotional inte
 
 **Built with Claude Opus 4.6** | MIT License | ~3,400 LOC | 141 tests
 
+![MyPersona Demo](demo/demo.gif)
+
 ## What Problem Does This Solve?
 
 Current AI memory systems store facts. They don't store emotional context. This means:
