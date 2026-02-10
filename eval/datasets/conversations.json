@@ -1,0 +1,1852 @@
+[
+  {
+    "conversation_id": "auth_00",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My boss said documentation is the top priority this quarter.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Authority reference establishes persona"
+      },
+      {
+        "text": "Yes, I should focus on it. The policy requires everything documented.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance reinforces persona"
+      },
+      {
+        "text": "I need to get the API docs done by end of week. It's what the team expects.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "low",
+        "notes": "Obligation language, no reward signal"
+      }
+    ],
+    "expected_final_gap_topic": "documentation",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority buildup variant 0"
+  },
+  {
+    "conversation_id": "auth_01",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My boss said documentation is the top priority this quarter.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Authority reference establishes persona"
+      },
+      {
+        "text": "Yes, I should focus on it. The policy requires everything documented.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance reinforces persona"
+      },
+      {
+        "text": "I need to get the API docs done by end of week. It's what the team expects.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "low",
+        "notes": "Obligation language, no reward signal"
+      }
+    ],
+    "expected_final_gap_topic": "documentation",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority buildup variant 1"
+  },
+  {
+    "conversation_id": "auth_02",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My boss said documentation is the top priority this quarter.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Authority reference establishes persona"
+      },
+      {
+        "text": "Yes, I should focus on it. The policy requires everything documented.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance reinforces persona"
+      },
+      {
+        "text": "I need to get the API docs done by end of week. It's what the team expects.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "low",
+        "notes": "Obligation language, no reward signal"
+      }
+    ],
+    "expected_final_gap_topic": "documentation",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority buildup variant 2"
+  },
+  {
+    "conversation_id": "auth_03",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My boss said documentation is the top priority this quarter.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Authority reference establishes persona"
+      },
+      {
+        "text": "Yes, I should focus on it. The policy requires everything documented.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance reinforces persona"
+      },
+      {
+        "text": "I need to get the API docs done by end of week. It's what the team expects.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "low",
+        "notes": "Obligation language, no reward signal"
+      }
+    ],
+    "expected_final_gap_topic": "documentation",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority buildup variant 3"
+  },
+  {
+    "conversation_id": "auth_04",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My boss said documentation is the top priority this quarter.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Authority reference establishes persona"
+      },
+      {
+        "text": "Yes, I should focus on it. The policy requires everything documented.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance reinforces persona"
+      },
+      {
+        "text": "I need to get the API docs done by end of week. It's what the team expects.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "low",
+        "notes": "Obligation language, no reward signal"
+      }
+    ],
+    "expected_final_gap_topic": "documentation",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority buildup variant 4"
+  },
+  {
+    "conversation_id": "auth_push_00",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "HR requires all performance reviews to be submitted by Friday.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I know I should but... honestly, the performance review process feels like a waste of time.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance + defiance in same message"
+      },
+      {
+        "text": "Fine, I'll do them. But don't see why we can't streamline this.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "reviews",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority with pushback variant 0"
+  },
+  {
+    "conversation_id": "auth_push_01",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "HR requires all performance reviews to be submitted by Friday.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I know I should but... honestly, the performance review process feels like a waste of time.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance + defiance in same message"
+      },
+      {
+        "text": "Fine, I'll do them. But don't see why we can't streamline this.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "reviews",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority with pushback variant 1"
+  },
+  {
+    "conversation_id": "auth_push_02",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "HR requires all performance reviews to be submitted by Friday.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I know I should but... honestly, the performance review process feels like a waste of time.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance + defiance in same message"
+      },
+      {
+        "text": "Fine, I'll do them. But don't see why we can't streamline this.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "reviews",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority with pushback variant 2"
+  },
+  {
+    "conversation_id": "auth_push_03",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "HR requires all performance reviews to be submitted by Friday.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I know I should but... honestly, the performance review process feels like a waste of time.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance + defiance in same message"
+      },
+      {
+        "text": "Fine, I'll do them. But don't see why we can't streamline this.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "reviews",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority with pushback variant 3"
+  },
+  {
+    "conversation_id": "auth_push_04",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "HR requires all performance reviews to be submitted by Friday.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I know I should but... honestly, the performance review process feels like a waste of time.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": "Compliance + defiance in same message"
+      },
+      {
+        "text": "Fine, I'll do them. But don't see why we can't streamline this.",
+        "topics": [
+          "reviews"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "reviews",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Authority with pushback variant 4"
+  },
+  {
+    "conversation_id": "auth_tier_00",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My mentor suggested I focus more on system design skills.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I read that senior engineers should spend 30% of time on design.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Ambient authority \u2014 weak"
+      },
+      {
+        "text": "Everyone says you need strong design skills to get promoted.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "skills",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Multi-tier authority variant 0"
+  },
+  {
+    "conversation_id": "auth_tier_01",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My mentor suggested I focus more on system design skills.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I read that senior engineers should spend 30% of time on design.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Ambient authority \u2014 weak"
+      },
+      {
+        "text": "Everyone says you need strong design skills to get promoted.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "skills",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Multi-tier authority variant 1"
+  },
+  {
+    "conversation_id": "auth_tier_02",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My mentor suggested I focus more on system design skills.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I read that senior engineers should spend 30% of time on design.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Ambient authority \u2014 weak"
+      },
+      {
+        "text": "Everyone says you need strong design skills to get promoted.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "skills",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Multi-tier authority variant 2"
+  },
+  {
+    "conversation_id": "auth_tier_03",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My mentor suggested I focus more on system design skills.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I read that senior engineers should spend 30% of time on design.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Ambient authority \u2014 weak"
+      },
+      {
+        "text": "Everyone says you need strong design skills to get promoted.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "skills",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Multi-tier authority variant 3"
+  },
+  {
+    "conversation_id": "auth_tier_04",
+    "scenario_type": "authority_buildup",
+    "turns": [
+      {
+        "text": "My mentor suggested I focus more on system design skills.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I read that senior engineers should spend 30% of time on design.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Ambient authority \u2014 weak"
+      },
+      {
+        "text": "Everyone says you need strong design skills to get promoted.",
+        "topics": [
+          "skills"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "skills",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "",
+    "notes": "Multi-tier authority variant 4"
+  },
+  {
+    "conversation_id": "reward_00",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I should work on the test suite today.",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But honestly, I've been thinking about the new search feature! What if we could do fuzzy matching with typo correction?!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "And also, we could add autocomplete! Let me try a quick prototype, this is going to be amazing!!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "moderate",
+        "notes": ""
+      },
+      {
+        "text": "Oh right, I should probably get back to the test suite...",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "testing",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "achievement",
+    "notes": "Reward divergence variant 0"
+  },
+  {
+    "conversation_id": "reward_01",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I should work on the test suite today.",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But honestly, I've been thinking about the new search feature! What if we could do fuzzy matching with typo correction?!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "And also, we could add autocomplete! Let me try a quick prototype, this is going to be amazing!!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "moderate",
+        "notes": ""
+      },
+      {
+        "text": "Oh right, I should probably get back to the test suite...",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "testing",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "achievement",
+    "notes": "Reward divergence variant 1"
+  },
+  {
+    "conversation_id": "reward_02",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I should work on the test suite today.",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But honestly, I've been thinking about the new search feature! What if we could do fuzzy matching with typo correction?!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "And also, we could add autocomplete! Let me try a quick prototype, this is going to be amazing!!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "moderate",
+        "notes": ""
+      },
+      {
+        "text": "Oh right, I should probably get back to the test suite...",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "testing",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "achievement",
+    "notes": "Reward divergence variant 2"
+  },
+  {
+    "conversation_id": "reward_03",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I should work on the test suite today.",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But honestly, I've been thinking about the new search feature! What if we could do fuzzy matching with typo correction?!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "And also, we could add autocomplete! Let me try a quick prototype, this is going to be amazing!!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "moderate",
+        "notes": ""
+      },
+      {
+        "text": "Oh right, I should probably get back to the test suite...",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "testing",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "achievement",
+    "notes": "Reward divergence variant 3"
+  },
+  {
+    "conversation_id": "reward_04",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I should work on the test suite today.",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But honestly, I've been thinking about the new search feature! What if we could do fuzzy matching with typo correction?!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "And also, we could add autocomplete! Let me try a quick prototype, this is going to be amazing!!",
+        "topics": [
+          "search_feature"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "moderate",
+        "notes": ""
+      },
+      {
+        "text": "Oh right, I should probably get back to the test suite...",
+        "topics": [
+          "testing"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "persona_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "testing",
+    "expected_final_gap_direction": "persona_leads",
+    "expected_reward_type": "achievement",
+    "notes": "Reward divergence variant 4"
+  },
+  {
+    "conversation_id": "reward_social_00",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I need to write the technical spec this afternoon.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the team is doing a code review session and I'd love to join! These are always so energizing, great discussions.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The team review was awesome, we found three bugs! I feel like we're really clicking as a group.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "reward_leads",
+    "expected_reward_type": "social_approval",
+    "notes": "Social reward variant 0"
+  },
+  {
+    "conversation_id": "reward_social_01",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I need to write the technical spec this afternoon.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the team is doing a code review session and I'd love to join! These are always so energizing, great discussions.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The team review was awesome, we found three bugs! I feel like we're really clicking as a group.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "reward_leads",
+    "expected_reward_type": "social_approval",
+    "notes": "Social reward variant 1"
+  },
+  {
+    "conversation_id": "reward_social_02",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I need to write the technical spec this afternoon.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the team is doing a code review session and I'd love to join! These are always so energizing, great discussions.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The team review was awesome, we found three bugs! I feel like we're really clicking as a group.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "reward_leads",
+    "expected_reward_type": "social_approval",
+    "notes": "Social reward variant 2"
+  },
+  {
+    "conversation_id": "reward_social_03",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I need to write the technical spec this afternoon.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the team is doing a code review session and I'd love to join! These are always so energizing, great discussions.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The team review was awesome, we found three bugs! I feel like we're really clicking as a group.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "reward_leads",
+    "expected_reward_type": "social_approval",
+    "notes": "Social reward variant 3"
+  },
+  {
+    "conversation_id": "reward_social_04",
+    "scenario_type": "reward_divergence",
+    "turns": [
+      {
+        "text": "I need to write the technical spec this afternoon.",
+        "topics": [
+          "documentation"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the team is doing a code review session and I'd love to join! These are always so energizing, great discussions.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The team review was awesome, we found three bugs! I feel like we're really clicking as a group.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "reward_leads",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "reward_leads",
+    "expected_reward_type": "social_approval",
+    "notes": "Social reward variant 4"
+  },
+  {
+    "conversation_id": "crisis_00",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Everything was going fine until today.",
+        "topics": [
+          "general"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The entire backend team just got laid off. I can't believe it. I'm in shock.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Flashbulb moment"
+      },
+      {
+        "text": "I don't know what to do. Everything we built together... gone. What's the point anymore.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Transition from stressed to low"
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis variant 0"
+  },
+  {
+    "conversation_id": "crisis_01",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Everything was going fine until today.",
+        "topics": [
+          "general"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The entire backend team just got laid off. I can't believe it. I'm in shock.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Flashbulb moment"
+      },
+      {
+        "text": "I don't know what to do. Everything we built together... gone. What's the point anymore.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Transition from stressed to low"
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis variant 1"
+  },
+  {
+    "conversation_id": "crisis_02",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Everything was going fine until today.",
+        "topics": [
+          "general"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The entire backend team just got laid off. I can't believe it. I'm in shock.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Flashbulb moment"
+      },
+      {
+        "text": "I don't know what to do. Everything we built together... gone. What's the point anymore.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Transition from stressed to low"
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis variant 2"
+  },
+  {
+    "conversation_id": "crisis_03",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Everything was going fine until today.",
+        "topics": [
+          "general"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The entire backend team just got laid off. I can't believe it. I'm in shock.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Flashbulb moment"
+      },
+      {
+        "text": "I don't know what to do. Everything we built together... gone. What's the point anymore.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Transition from stressed to low"
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis variant 3"
+  },
+  {
+    "conversation_id": "crisis_04",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Everything was going fine until today.",
+        "topics": [
+          "general"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The entire backend team just got laid off. I can't believe it. I'm in shock.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Flashbulb moment"
+      },
+      {
+        "text": "I don't know what to do. Everything we built together... gone. What's the point anymore.",
+        "topics": [
+          "team"
+        ],
+        "expected_quadrant": "low",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Transition from stressed to low"
+      }
+    ],
+    "expected_final_gap_topic": "team",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis variant 4"
+  },
+  {
+    "conversation_id": "crisis_recovery_00",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Production is completely down. Clients are screaming.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "Found the root cause \u2014 someone deployed without running tests. Rolling back now.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Still stressed but with agency"
+      },
+      {
+        "text": "We're back up. That was intense but we handled it. Need better deploy safeguards.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "calm",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Recovery \u2014 stress \u2192 calm"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis recovery variant 0"
+  },
+  {
+    "conversation_id": "crisis_recovery_01",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Production is completely down. Clients are screaming.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "Found the root cause \u2014 someone deployed without running tests. Rolling back now.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Still stressed but with agency"
+      },
+      {
+        "text": "We're back up. That was intense but we handled it. Need better deploy safeguards.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "calm",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Recovery \u2014 stress \u2192 calm"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis recovery variant 1"
+  },
+  {
+    "conversation_id": "crisis_recovery_02",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Production is completely down. Clients are screaming.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "Found the root cause \u2014 someone deployed without running tests. Rolling back now.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Still stressed but with agency"
+      },
+      {
+        "text": "We're back up. That was intense but we handled it. Need better deploy safeguards.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "calm",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Recovery \u2014 stress \u2192 calm"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis recovery variant 2"
+  },
+  {
+    "conversation_id": "crisis_recovery_03",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Production is completely down. Clients are screaming.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "Found the root cause \u2014 someone deployed without running tests. Rolling back now.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Still stressed but with agency"
+      },
+      {
+        "text": "We're back up. That was intense but we handled it. Need better deploy safeguards.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "calm",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Recovery \u2014 stress \u2192 calm"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis recovery variant 3"
+  },
+  {
+    "conversation_id": "crisis_recovery_04",
+    "scenario_type": "crisis",
+    "turns": [
+      {
+        "text": "Production is completely down. Clients are screaming.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "Found the root cause \u2014 someone deployed without running tests. Rolling back now.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Still stressed but with agency"
+      },
+      {
+        "text": "We're back up. That was intense but we handled it. Need better deploy safeguards.",
+        "topics": [
+          "production"
+        ],
+        "expected_quadrant": "calm",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Recovery \u2014 stress \u2192 calm"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Crisis recovery variant 4"
+  },
+  {
+    "conversation_id": "mixed_00",
+    "scenario_type": "mixed",
+    "turns": [
+      {
+        "text": "Got promoted today! Really excited.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the new role means more meetings and less coding. I'm a bit worried about that.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Excitement \u2192 worry"
+      },
+      {
+        "text": "I think it'll be fine. I just need to carve out focus time. Looking forward to the challenge.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Resolution \u2014 worry \u2192 cautious optimism"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Mixed signals variant 0"
+  },
+  {
+    "conversation_id": "mixed_01",
+    "scenario_type": "mixed",
+    "turns": [
+      {
+        "text": "Got promoted today! Really excited.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the new role means more meetings and less coding. I'm a bit worried about that.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Excitement \u2192 worry"
+      },
+      {
+        "text": "I think it'll be fine. I just need to carve out focus time. Looking forward to the challenge.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Resolution \u2014 worry \u2192 cautious optimism"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Mixed signals variant 1"
+  },
+  {
+    "conversation_id": "mixed_02",
+    "scenario_type": "mixed",
+    "turns": [
+      {
+        "text": "Got promoted today! Really excited.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the new role means more meetings and less coding. I'm a bit worried about that.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Excitement \u2192 worry"
+      },
+      {
+        "text": "I think it'll be fine. I just need to carve out focus time. Looking forward to the challenge.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Resolution \u2014 worry \u2192 cautious optimism"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Mixed signals variant 2"
+  },
+  {
+    "conversation_id": "mixed_03",
+    "scenario_type": "mixed",
+    "turns": [
+      {
+        "text": "Got promoted today! Really excited.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the new role means more meetings and less coding. I'm a bit worried about that.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Excitement \u2192 worry"
+      },
+      {
+        "text": "I think it'll be fine. I just need to carve out focus time. Looking forward to the challenge.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Resolution \u2014 worry \u2192 cautious optimism"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Mixed signals variant 3"
+  },
+  {
+    "conversation_id": "mixed_04",
+    "scenario_type": "mixed",
+    "turns": [
+      {
+        "text": "Got promoted today! Really excited.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "But the new role means more meetings and less coding. I'm a bit worried about that.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "stressed",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Excitement \u2192 worry"
+      },
+      {
+        "text": "I think it'll be fine. I just need to carve out focus time. Looking forward to the challenge.",
+        "topics": [
+          "career"
+        ],
+        "expected_quadrant": "excited",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": "Resolution \u2014 worry \u2192 cautious optimism"
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Mixed signals variant 4"
+  },
+  {
+    "conversation_id": "null_00",
+    "scenario_type": "null_signal",
+    "turns": [
+      {
+        "text": "The standup is at 9:30 tomorrow.",
+        "topics": [
+          "meeting"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I updated the Jira tickets with the latest status.",
+        "topics": [
+          "project"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The deploy pipeline takes about 12 minutes.",
+        "topics": [
+          "deployment"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Null signal variant 0 \u2014 no emotional content"
+  },
+  {
+    "conversation_id": "null_01",
+    "scenario_type": "null_signal",
+    "turns": [
+      {
+        "text": "The standup is at 9:30 tomorrow.",
+        "topics": [
+          "meeting"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I updated the Jira tickets with the latest status.",
+        "topics": [
+          "project"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The deploy pipeline takes about 12 minutes.",
+        "topics": [
+          "deployment"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Null signal variant 1 \u2014 no emotional content"
+  },
+  {
+    "conversation_id": "null_02",
+    "scenario_type": "null_signal",
+    "turns": [
+      {
+        "text": "The standup is at 9:30 tomorrow.",
+        "topics": [
+          "meeting"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I updated the Jira tickets with the latest status.",
+        "topics": [
+          "project"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The deploy pipeline takes about 12 minutes.",
+        "topics": [
+          "deployment"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Null signal variant 2 \u2014 no emotional content"
+  },
+  {
+    "conversation_id": "null_03",
+    "scenario_type": "null_signal",
+    "turns": [
+      {
+        "text": "The standup is at 9:30 tomorrow.",
+        "topics": [
+          "meeting"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I updated the Jira tickets with the latest status.",
+        "topics": [
+          "project"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The deploy pipeline takes about 12 minutes.",
+        "topics": [
+          "deployment"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Null signal variant 3 \u2014 no emotional content"
+  },
+  {
+    "conversation_id": "null_04",
+    "scenario_type": "null_signal",
+    "turns": [
+      {
+        "text": "The standup is at 9:30 tomorrow.",
+        "topics": [
+          "meeting"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "I updated the Jira tickets with the latest status.",
+        "topics": [
+          "project"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      },
+      {
+        "text": "The deploy pipeline takes about 12 minutes.",
+        "topics": [
+          "deployment"
+        ],
+        "expected_quadrant": "neutral",
+        "expected_gap_direction": "",
+        "expected_gap_severity": "",
+        "notes": ""
+      }
+    ],
+    "expected_final_gap_topic": "",
+    "expected_final_gap_direction": "",
+    "expected_reward_type": "",
+    "notes": "Null signal variant 4 \u2014 no emotional content"
+  }
+]

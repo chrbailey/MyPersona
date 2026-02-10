@@ -63,11 +63,13 @@ class MoodDetector:
         "v_tired":        (r'\b(tired|exhausted|drained|fatigued)\b', -0.25),
         "v_apathy":       (r"\b(don't care|doesn't matter|who cares|meh|blah)\b", -0.2),
         "v_stuck":        (r'\b(stuck|stalled|blocked|no progress)\b', -0.2),
-        "v_content":      (r'\b(content|peaceful|serene|tranquil|at ease)\b', +0.15),
+        "v_content":      (r'\b(content|peaceful|serene|tranquil|at ease|enjoying)\b', +0.15),
         "v_smooth":       (r'\b(smoothly|steady|stable|on track|under control)\b', +0.15),
         "v_mild_neg":     (r'\b(behind|complicated|not ideal|tight|piling up|keeps? changing|scope creep)\b', -0.15),
         "v_resigned":     (r'\b(whatever|suppose|I guess)\b', -0.1),
         "v_struggling":   (r"\b(can't deal|can't keep up|hard to focus|interruptions?|dropped .* on me|insane)\b", -0.2),
+        "v_pos_emoji":    (r'(👍|🙂|☺️|🌊|😌|🧘|💪|🚀|🎉|🔥)', +0.15),
+        "v_neg_emoji":    (r'(😐|😞|😕|😔|💀|😤|😡|😰|😫|🤷)', -0.15),
     }
 
     AROUSAL_PATTERNS = {
@@ -87,8 +89,10 @@ class MoodDetector:
         "a_disengaged":   (r"\b(don't care|doesn't matter|who cares|meh|blah)\b", -0.2),
         "a_fatigue":      (r'\b(tired|exhausted|drained|worn out|burned? out)\b', -0.15),
         "a_monotone":     (r'\b(same old|another day|going through the motions)\b', -0.2),
-        "a_calm":         (r'\b(content|peaceful|serene|tranquil|at ease|smoothly|steady|stable|on track|under control|no complaints|no issues|quiet)\b', -0.2),
+        "a_calm":         (r'\b(content|peaceful|serene|tranquil|at ease|smoothly|steady|stable|on track|under control|no complaints|no issues|quiet|slower pace|maintaining)\b', -0.2),
         "a_mild_tension": (r'\b(behind|complicated|escalat|running out|piling up|tight timeline|growing scope|keeps? changing)\b', +0.15),
+        "a_calm_emoji":   (r'(👍|🙂|☺️|😌|🧘|🌊)', -0.15),
+        "a_tense_emoji":  (r'(😤|😡|😰|😫|💀|🔥)', +0.15),
     }
 
     NEGATORS = re.compile(r"\b(not|n't|no|never|neither|nor)\b", re.IGNORECASE)
@@ -112,13 +116,17 @@ class MoodDetector:
         signals = []
 
         # Strip quoted speech so we don't detect someone else's emotions
-        # Use double quotes only (apostrophes in contractions like "can't" are not quotes)
+        # Double quotes
         text_clean = re.sub(r'"([^"]*)"', " ", text)
-        # Smart quotes (curly)
-        text_clean = re.sub(r"[\u201c\u201d].*?[\u201c\u201d]", " ", text_clean)
-        # Single quotes only when preceded by whitespace/start (not mid-word contractions)
+        # Smart/curly quotes
+        text_clean = re.sub(r"[\u201c].*?[\u201d]", " ", text_clean)
+        text_clean = re.sub(r"[\u2018].*?[\u2019]", " ", text_clean)
+        # Speech-verb + single-quoted clause (handles contractions inside quotes)
+        text_clean = re.sub(
+            r"""(?:said|wrote|told\s+\w+|says|tell\s+\w+|asked)\s+'(?:[^']*(?:\w'\w)[^']*)*[^']*'""",
+            " ", text_clean, flags=re.IGNORECASE)
+        # Standalone single-quoted without contractions
         text_clean = re.sub(r"(?:^|\s)'([^']*)'(?:\s|[.,!?]|$)", " ", text_clean)
-        text_clean = re.sub(r"[\u2018\u2019].*?[\u2018\u2019]", " ", text_clean)
 
         for name, (pattern, value) in self.VALENCE_PATTERNS.items():
             match = re.search(pattern, text_clean, re.IGNORECASE)
@@ -173,7 +181,7 @@ class MoodDetector:
 
         return MoodState(
             valence=valence, arousal=arousal,
-            confidence=min(0.95, 0.3 + len(signals) * 0.12),
+            confidence=min(0.80, 0.55 + len(signals) * 0.06),
             quadrant=quadrant, signals=signals,
         )
 

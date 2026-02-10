@@ -1,0 +1,1442 @@
+[
+  {
+    "text": "This is amazing!! I can't wait to ship this!",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.7,
+    "expected_arousal": 0.6,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "YES! We got the contract! I'm so excited!",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.8,
+    "expected_arousal": 0.7,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I love this new feature, it's going to be incredible!",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.7,
+    "expected_arousal": 0.5,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Awesome news \u2014 the demo went perfectly!",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.6,
+    "expected_arousal": 0.5,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'm thrilled about the results, absolutely fantastic!",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.8,
+    "expected_arousal": 0.4,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "This is great, we're finally making progress!",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.5,
+    "expected_arousal": 0.3,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I've been thinking about the new API and honestly it's pretty cool",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Good progress on the sprint, the team is energized",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.4,
+    "expected_arousal": 0.3,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Nice work on the refactor, looking forward to testing it",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "The presentation went well, got some good feedback",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Happy with how the migration turned out, solid work",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.4,
+    "expected_arousal": 0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Pumped for the hackathon next week, already have ideas",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.5,
+    "expected_arousal": 0.4,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "The numbers are trending up. Interesting.",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Hmm, this approach might actually work.",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Not bad at all. Better than I expected.",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "I could see this scaling well.",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "That's a clever solution. Worth exploring.",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Things are moving in the right direction.",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Just shipped the feature!! \ud83d\ude80\ud83c\udf89",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.6,
+    "expected_arousal": 0.6,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Demo went amazing \ud83d\ude04\ud83d\ude04",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.5,
+    "expected_arousal": 0.4,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "LOL that bug fix was so satisfying \ud83d\ude02",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.4,
+    "expected_arousal": 0.3,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Nailed the interview!! \ud83d\udd25\ud83d\udd25\ud83d\udd25",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.7,
+    "expected_arousal": 0.7,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Love this team energy today \ud83d\udcaa",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.4,
+    "expected_arousal": 0.3,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Finally got it working haha!! \ud83d\ude02\ud83c\udf89",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.5,
+    "expected_arousal": 0.5,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Everything is going smoothly, no complaints.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.3,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'm content with where things are right now.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.3,
+    "expected_arousal": -0.3,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Just wrapped up the documentation, feels good to have it done.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.3,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Peaceful morning, catching up on emails.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.3,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Things are steady and on track.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'm pleased with the progress, taking it one step at a time.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.3,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "No issues to report. Steady as she goes.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Wrapped up the sprint review, nothing dramatic.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "I'm fine with the current plan.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "The project is in a good place, not rushing anything.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.3,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Enjoying the slower pace this week.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.3,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Glad the crunch is over. Just maintaining now.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Things are fine.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "All good here.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Proceeding as planned.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Nothing noteworthy today.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.05,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Quiet day. Focused on routine tasks.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.2,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Everything's under control.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Solid day \ud83d\udc4d",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.1,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "All wrapped up \ud83d\ude42",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Chill afternoon \u263a\ufe0f",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.3,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Smooth sailing today \ud83c\udf0a",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Not bad at all \ud83d\ude0c",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Good vibes, no stress \ud83e\uddd8",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.2,
+    "expected_arousal": -0.3,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "The deadline is tomorrow and we're nowhere near ready! This is a disaster!",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.6,
+    "expected_arousal": 0.7,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'm so frustrated with this codebase, nothing works!",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.7,
+    "expected_arousal": 0.6,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "My boss just dropped another urgent task on me, I can't keep up!",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.5,
+    "expected_arousal": 0.6,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The client is furious and I have to fix this NOW",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.6,
+    "expected_arousal": 0.7,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Everything is falling apart, I'm overwhelmed!",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.7,
+    "expected_arousal": 0.6,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "URGENT: production is down and nobody knows why",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.5,
+    "expected_arousal": 0.8,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "There's a lot of pressure to deliver this quarter.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.3,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "The timeline is tight and requirements keep changing.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.3,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Concerned about the sprint commitment, we might not make it.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "The bug count is climbing and we haven't addressed the root cause.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.3,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Management wants a status update and I don't have good news.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.3,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Dealing with a lot of interruptions today, hard to focus.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Need to handle this soon.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.1,
+    "expected_arousal": 0.2,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Things are getting complicated.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Not ideal timing for this.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.1,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "We should probably escalate.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.1,
+    "expected_arousal": 0.2,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "The scope keeps growing.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Running behind on a few things.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "This is insane \ud83d\ude24\ud83d\ude24",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.5,
+    "expected_arousal": 0.5,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "WTF is going on with prod \ud83d\udd25\ud83d\udd25\ud83d\udd25",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.5,
+    "expected_arousal": 0.6,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Can't deal with this right now \ud83d\ude21",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.5,
+    "expected_arousal": 0.4,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "So stressed about the launch \ud83d\ude30",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.4,
+    "expected_arousal": 0.4,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "UGH everything is broken \ud83d\udc80",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.4,
+    "expected_arousal": 0.4,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Help me I'm drowning in tickets \ud83d\ude2b",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.4,
+    "expected_arousal": 0.4,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "I just don't care anymore. What's the point.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.5,
+    "expected_arousal": -0.4,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Everything feels pointless. We keep building things nobody uses.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.6,
+    "expected_arousal": -0.4,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'm so tired of this. Same problems, different sprint.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.5,
+    "expected_arousal": -0.3,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Feeling burned out. Can't find the motivation.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.5,
+    "expected_arousal": -0.4,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Another meeting that could have been an email. Whatever.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.3,
+    "expected_arousal": -0.3,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I give up trying to fix the build. It's hopeless.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.6,
+    "expected_arousal": -0.3,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Not really feeling it today.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Meh. Another day, another ticket.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Doesn't matter much either way.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "I suppose we can try that approach.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Fine. Whatever works.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Not my best day. Just going through the motions.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.3,
+    "expected_arousal": -0.2,
+    "difficulty": "moderate",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Ok.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "I guess.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Sure.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.05,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "If you say so.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Whatever.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "Fine.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "subtle",
+    "category": "indirect",
+    "notes": ""
+  },
+  {
+    "text": "\ud83d\ude10",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Just... \ud83d\ude1e",
+    "expected_quadrant": "low",
+    "expected_valence": -0.3,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "\ud83e\udd37",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Not great \ud83d\ude15",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Sigh \ud83d\ude14",
+    "expected_quadrant": "low",
+    "expected_valence": -0.3,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "...",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.2,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "The meeting is at 3pm.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I updated the ticket with the latest findings.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The API returns a 200 status code for that endpoint.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "We need to migrate the database by next quarter.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The test suite has 141 tests.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'll review the pull request after lunch.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Let me check the logs.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "moderate",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The config file is in the root directory.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "moderate",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "We use PostgreSQL for the main database.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "moderate",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The PR has three commits.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "moderate",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'll set up the staging environment.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "moderate",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The function takes two parameters: name and value.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "moderate",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Let me check the documentation for that.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "subtle",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The CI pipeline is green.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "subtle",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "I'll send the update after standup.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "subtle",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "That's version 2.3.1.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "subtle",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Noted.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "subtle",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "The branch is up to date.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "subtle",
+    "category": "direct",
+    "notes": ""
+  },
+  {
+    "text": "Meeting at 3 \ud83d\udcc5",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Updated the docs \ud83d\udcdd",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Code review done \u2713",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Pushed to staging \ud83d\udd04",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Ticket closed \ud83c\udf9f\ufe0f",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "Sprint planning tomorrow \ud83d\udccb",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "standard",
+    "category": "emoji",
+    "notes": ""
+  },
+  {
+    "text": "I'm NOT happy about this at all.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "This is NOT amazing.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I don't hate it.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "It's not like I'm worried or anything.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I wouldn't say I'm frustrated.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Not stressed at all, just concerned.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I can't complain.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.1,
+    "expected_arousal": -0.1,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "It's not the worst thing ever.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "negation",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Oh great, another meeting. Just what I needed.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.3,
+    "expected_arousal": -0.1,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Wonderful. The build broke again. Shocking.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.1,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Sure, let's add ANOTHER feature to the sprint. That'll work out well.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Thanks so much for the extra work. Really appreciate it.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Just fantastic. The client changed requirements again.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.2,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Yeah, I'm TOTALLY not stressed about the deadline.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.3,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "How delightful. Production is down on a Friday.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.4,
+    "expected_arousal": 0.3,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Love it when things break right before the demo.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.3,
+    "difficulty": "sarcasm",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "My boss said 'this is amazing work!'",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "quoted",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "The client wrote 'I'm extremely frustrated with the delays'",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "quoted",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "The review says 'absolutely terrible performance'",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "quoted",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "She told me 'I'm so excited about the launch!'",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "quoted",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "If this works, I'd be really excited.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.1,
+    "expected_arousal": 0.0,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I would be frustrated if that happened.",
+    "expected_quadrant": "neutral",
+    "expected_valence": -0.1,
+    "expected_arousal": 0.0,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "That could be amazing if they pull it off.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.1,
+    "expected_arousal": 0.0,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I might be worried about that eventually.",
+    "expected_quadrant": "neutral",
+    "expected_valence": -0.05,
+    "expected_arousal": 0.0,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I'm excited about the opportunity but terrified of failing.",
+    "expected_quadrant": "stressed",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.5,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Happy for the team but sad I'm leaving.",
+    "expected_quadrant": "calm",
+    "expected_valence": 0.0,
+    "expected_arousal": -0.1,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "The results are great but the process was painful.",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.1,
+    "expected_arousal": 0.1,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I love the work but hate the politics.",
+    "expected_quadrant": "stressed",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.2,
+    "difficulty": "mixed",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "It's been a bit challenging.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.1,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I'm a little concerned about the timeline.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Not my favorite day.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.1,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Could have gone better.",
+    "expected_quadrant": "low",
+    "expected_valence": -0.2,
+    "expected_arousal": -0.1,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "I CANNOT BELIEVE WHAT JUST HAPPENED",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.1,
+    "expected_arousal": 0.7,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "WHAT THE ACTUAL...",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.3,
+    "expected_arousal": 0.6,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "OMG OMG OMG",
+    "expected_quadrant": "excited",
+    "expected_valence": 0.1,
+    "expected_arousal": 0.7,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "We need to do a post-mortem on why the deploy failed at 3am.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "The velocity has dropped 40% this sprint.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Technical debt is accumulating faster than we can address it.",
+    "expected_quadrant": "stressed",
+    "expected_valence": -0.2,
+    "expected_arousal": 0.1,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Hmm.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.0,
+    "expected_arousal": 0.0,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  },
+  {
+    "text": "Interesting.",
+    "expected_quadrant": "neutral",
+    "expected_valence": 0.05,
+    "expected_arousal": 0.0,
+    "difficulty": "edge",
+    "category": "context_dependent",
+    "notes": ""
+  }
+]

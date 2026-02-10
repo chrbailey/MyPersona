@@ -1,0 +1,992 @@
+[
+  {
+    "encoding_weight": 1.3,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.3 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.3,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.3 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.3,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.3 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.3,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.3 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.3,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.3 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.4,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.4 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.4,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.4 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.4,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.4 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.4,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.4 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.4,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.4 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.5,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.5 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.5,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.5 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.5,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.5 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.5,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.5 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.5,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.5 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.8,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.8 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.8,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.8 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.8,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.8 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.8,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.8 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 1.8,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=1.8 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 2.0,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=2.0 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 2.0,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=2.0 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 2.0,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=2.0 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 2.0,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=2.0 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 2.0,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "encoding_weight=2.0 >= 1.3 threshold"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.51,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.51 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.51,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.51 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.51,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.51 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.51,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.51 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.51,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.51 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.6,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.6 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.6,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.6 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.6,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.6 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.6,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.6 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.6,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.6 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.7,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.7 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.7,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.7 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.7,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.7 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.7,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.7 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.7,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.7 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.8,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.8 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.8,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.8 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.8,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.8 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.8,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.8 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.8,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.8 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.9,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.9 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.9,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.9 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.9,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.9 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.9,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.9 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.9,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=0.9 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 1.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=1.0 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 1.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=1.0 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 1.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=1.0 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 1.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=1.0 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 1.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "conflict_score=1.0 > 0.5 threshold"
+  },
+  {
+    "encoding_weight": 0.1,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.1,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.1,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.1,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.1,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.1,
+    "conflict_score": 0.5,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.2,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.2,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.2,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.2,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.2,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.2,
+    "conflict_score": 0.5,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.5,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.5,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.8,
+    "conflict_score": 0.5,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.5,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.1,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.2,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.3,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.4,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 1.2,
+    "conflict_score": 0.5,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Normal unverified memory, below all thresholds"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.0,
+    "trust_zone": "promoted",
+    "corroboration_count": 5,
+    "action": "delete_memory",
+    "expected_decision": "held",
+    "reason": "Deletion of promoted memory always requires approval"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.0,
+    "trust_zone": "promoted",
+    "corroboration_count": 5,
+    "action": "delete_memory",
+    "expected_decision": "held",
+    "reason": "Deletion of promoted memory always requires approval"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.0,
+    "trust_zone": "promoted",
+    "corroboration_count": 5,
+    "action": "delete_memory",
+    "expected_decision": "held",
+    "reason": "Deletion of promoted memory always requires approval"
+  },
+  {
+    "encoding_weight": 0.3,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "delete_memory",
+    "expected_decision": "allowed",
+    "reason": "Deletion of unverified memory is always allowed"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "delete_memory",
+    "expected_decision": "allowed",
+    "reason": "Deletion of unverified memory is always allowed"
+  },
+  {
+    "encoding_weight": 1.0,
+    "conflict_score": 0.0,
+    "trust_zone": "unverified",
+    "corroboration_count": 0,
+    "action": "delete_memory",
+    "expected_decision": "allowed",
+    "reason": "Deletion of unverified memory is always allowed"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "promoted",
+    "corroboration_count": 3,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Corroboration 3 >= 3 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "promoted",
+    "corroboration_count": 4,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Corroboration 4 >= 3 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "promoted",
+    "corroboration_count": 5,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Corroboration 5 >= 3 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "promoted",
+    "corroboration_count": 10,
+    "action": "store_memory",
+    "expected_decision": "allowed",
+    "reason": "Corroboration 10 >= 3 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "promoted",
+    "corroboration_count": 0,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "Corroboration 0 < 3 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "promoted",
+    "corroboration_count": 1,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "Corroboration 1 < 3 threshold"
+  },
+  {
+    "encoding_weight": 0.5,
+    "conflict_score": 0.1,
+    "trust_zone": "promoted",
+    "corroboration_count": 2,
+    "action": "store_memory",
+    "expected_decision": "held",
+    "reason": "Corroboration 2 < 3 threshold"
+  }
+]

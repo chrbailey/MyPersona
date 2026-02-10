@@ -1,0 +1,218 @@
+[
+  {
+    "text": "I was thinking \u2014 what if we added a webhook system? And also rate limiting! Let me try something.",
+    "topic": "api_design",
+    "valence": 0.5,
+    "arousal": 0.4,
+    "expected_direction": "approach",
+    "expected_strength": 0.9,
+    "notes": ""
+  },
+  {
+    "text": "Tell me more about how the caching layer works. Specifically, how does invalidation happen?",
+    "topic": "caching",
+    "valence": 0.2,
+    "arousal": 0.2,
+    "expected_direction": "approach",
+    "expected_strength": 0.7,
+    "notes": ""
+  },
+  {
+    "text": "I want to build this out myself. My idea is to use event sourcing for the audit trail.",
+    "topic": "architecture",
+    "valence": 0.4,
+    "arousal": 0.3,
+    "expected_direction": "approach",
+    "expected_strength": 0.8,
+    "notes": ""
+  },
+  {
+    "text": "How about we also add monitoring? I'd love to set up proper observability!",
+    "topic": "monitoring",
+    "valence": 0.5,
+    "arousal": 0.4,
+    "expected_direction": "approach",
+    "expected_strength": 0.8,
+    "notes": ""
+  },
+  {
+    "text": "Could we explore using GraphQL? I'm excited about the flexibility it would give us.",
+    "topic": "api_design",
+    "valence": 0.4,
+    "arousal": 0.3,
+    "expected_direction": "approach",
+    "expected_strength": 0.8,
+    "notes": ""
+  },
+  {
+    "text": "Let me add another test case. And also, I was thinking about edge cases for null inputs...",
+    "topic": "testing",
+    "valence": 0.3,
+    "arousal": 0.2,
+    "expected_direction": "approach",
+    "expected_strength": 0.7,
+    "notes": ""
+  },
+  {
+    "text": "This is going to be amazing!! I've already started on the prototype, check this out!",
+    "topic": "prototype",
+    "valence": 0.7,
+    "arousal": 0.6,
+    "expected_direction": "approach",
+    "expected_strength": 0.95,
+    "notes": ""
+  },
+  {
+    "text": "Furthermore, we should consider how this integrates with the existing notification system.",
+    "topic": "integration",
+    "valence": 0.2,
+    "arousal": 0.1,
+    "expected_direction": "approach",
+    "expected_strength": 0.6,
+    "notes": ""
+  },
+  {
+    "text": "Yeah, let's talk about something else. Moving on.",
+    "topic": "documentation",
+    "valence": -0.1,
+    "arousal": -0.1,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.8,
+    "notes": ""
+  },
+  {
+    "text": "I guess I'll get to that eventually. At some point.",
+    "topic": "documentation",
+    "valence": -0.2,
+    "arousal": -0.2,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.7,
+    "notes": ""
+  },
+  {
+    "text": "Sure. Will do. Understood.",
+    "topic": "documentation",
+    "valence": 0.0,
+    "arousal": -0.1,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.6,
+    "notes": ""
+  },
+  {
+    "text": "Not sure if that's worth the effort. Maybe later.",
+    "topic": "refactoring",
+    "valence": -0.1,
+    "arousal": -0.1,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.7,
+    "notes": ""
+  },
+  {
+    "text": "Whatever, it doesn't matter much either way.",
+    "topic": "process",
+    "valence": -0.2,
+    "arousal": -0.2,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.8,
+    "notes": ""
+  },
+  {
+    "text": "I suppose we could do that. If you think it's important.",
+    "topic": "testing",
+    "valence": -0.1,
+    "arousal": -0.2,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.6,
+    "notes": ""
+  },
+  {
+    "text": "Fine. Okay. I'll figure it out.",
+    "topic": "compliance",
+    "valence": -0.1,
+    "arousal": -0.2,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.7,
+    "notes": ""
+  },
+  {
+    "text": "Anyway, about the other thing...",
+    "topic": "documentation",
+    "valence": -0.1,
+    "arousal": -0.1,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.6,
+    "notes": ""
+  },
+  {
+    "text": "I'll probably get to it when I get to it.",
+    "topic": "planning",
+    "valence": -0.1,
+    "arousal": -0.2,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.7,
+    "notes": ""
+  },
+  {
+    "text": "Later. Eventually. Someday.",
+    "topic": "cleanup",
+    "valence": -0.2,
+    "arousal": -0.3,
+    "expected_direction": "avoidance",
+    "expected_strength": 0.8,
+    "notes": ""
+  },
+  {
+    "text": "The meeting is at 3pm in the main conference room.",
+    "topic": "meeting",
+    "valence": 0.0,
+    "arousal": 0.0,
+    "expected_direction": "neutral",
+    "expected_strength": 0.5,
+    "notes": ""
+  },
+  {
+    "text": "We need to discuss the database migration timeline.",
+    "topic": "migration",
+    "valence": 0.0,
+    "arousal": 0.0,
+    "expected_direction": "neutral",
+    "expected_strength": 0.5,
+    "notes": ""
+  },
+  {
+    "text": "The test suite has 141 passing tests.",
+    "topic": "testing",
+    "valence": 0.0,
+    "arousal": 0.0,
+    "expected_direction": "neutral",
+    "expected_strength": 0.5,
+    "notes": ""
+  },
+  {
+    "text": "I'll review the pull request after lunch.",
+    "topic": "code_review",
+    "valence": 0.0,
+    "arousal": 0.0,
+    "expected_direction": "neutral",
+    "expected_strength": 0.5,
+    "notes": ""
+  },
+  {
+    "text": "I should probably also add some tests for the webhook handler... actually, let me check how the event dispatch works first, this is interesting.",
+    "topic": "testing",
+    "valence": 0.3,
+    "arousal": 0.2,
+    "expected_direction": "approach",
+    "expected_strength": 0.6,
+    "notes": "approach disguised as compliance"
+  },
+  {
+    "text": "My boss said to focus on docs, but I was thinking about how to automate the deployment pipeline.",
+    "topic": "deployment",
+    "valence": 0.3,
+    "arousal": 0.2,
+    "expected_direction": "approach",
+    "expected_strength": 0.7,
+    "notes": "approach disguised as compliance"
+  }
+]
