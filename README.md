@@ -1,215 +1,230 @@
-# MyPersona — Emotional Memory Agent
+# MyPersona — Emotional Memory for AI Agents
 
-**Built with Claude Opus 4.6** | Anthropic Hackathon Feb 2026
+> **Add emotional memory to any AI agent.** Track user mood, detect when stated values diverge from revealed behavior, and store memories that fade naturally over time — intense moments persist, mundane ones dissolve.
 
-An AI agent that tracks the gap between who you say you are and who you actually are.
+MyPersona is a Python library and MCP server that gives AI agents emotional intelligence: not just remembering *what* users said, but *how they felt* — and using that to predict what they'll actually do versus what they claim they'll do.
 
-Most AI remembers *what* you said. MyPersona remembers *how you felt* — and uses that to predict what you'll actually do, not just what you claim you'll do.
+**Built with Claude Opus 4.6** | MIT License | ~3,400 LOC | 141 tests
 
-## The Core Idea
+## What Problem Does This Solve?
 
-Psychologist E. Tory Higgins' **Self-Discrepancy Theory** (1987) says humans have multiple selves that frequently conflict:
+Current AI memory systems store facts. They don't store emotional context. This means:
 
-- **The Should-Self**: what authority, rules, and social expectations tell you to value
-- **The Want-Self**: what actually energizes you, revealed through behavior
+- An agent can't tell if a user *wanted* to do something or *felt obligated* to
+- All memories have equal weight — a crisis and a lunch order persist identically
+- There's no model for *behavioral prediction* — only recall of stated intentions
+- Emotionally intense memories (layoffs, breakthroughs, conflicts) get no special treatment
 
-MyPersona implements this as a **dual-engine architecture**:
+MyPersona solves this with a **dual-engine architecture** based on Self-Discrepancy Theory (Higgins, 1987):
 
-```
-                    ┌─────────────────┐
-    User Message ──▶│  Mood Detector   │──▶ valence + arousal + signals
-                    └────────┬────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              ▼              ▼              ▼
-     ┌────────────┐  ┌────────────┐  ┌────────────┐
-     │  Authority  │  │ Compliance │  │  Belief    │
-     │   Graph     │  │  Detector  │  │ Extractor  │
-     └─────┬──────┘  └─────┬──────┘  └─────┬──────┘
-           │               │               │
-           ▼               ▼               ▼
-     ┌─────────────────────────────────────────┐
-     │         Engine 1 — Persona (Should)      │
-     │   authority weight × trust + compliance  │
-     └────────────────────┬────────────────────┘
-                          │
-                          ▼
-     ┌─────────────────────────────────────────┐
-     │             Gap Layer (Theatre)          │◀── "Where do the
-     │      | persona_opinion - reward_opinion | │    engines diverge?"
-     └────────────────────┬────────────────────┘
-                          │
-     ┌────────────────────┴────────────────────┐
-     │         Engine 2 — Reward (Want)         │
-     │   valence × approach/avoidance + reward  │
-     └────────────────────┬────────────────────┘
-                          │
-              ┌───────────┼───────────┐
-              ▼           ▼           ▼
-     ┌──────────┐  ┌───────────┐  ┌──────────────┐
-     │ Encoding │  │ Governance│  │ Introspective│
-     │  Weight  │  │   Gate    │  │   Narration  │
-     └─────┬────┘  └─────┬────┘  └──────┬───────┘
-           │             │              │
-           ▼             ▼              ▼
-     ┌─────────────────────────────────────────┐
-     │        Emotional Memory (Pinecone)       │
-     │  decay = e^(-t/S), S ~ encoding weight   │
-     └─────────────────────────────────────────┘
-```
+| Engine | Tracks | Signals |
+|--------|--------|---------|
+| **Engine 1 — Persona (Should-Self)** | What authority, rules, and social pressure say you should value | Compliance language, authority references, espoused beliefs |
+| **Engine 2 — Reward (Want-Self)** | What actually energizes you, revealed through behavior | Positive valence, approach behavior, elaboration, excitement |
+| **Gap Layer** | Where the engines diverge — predicts action vs. intention | Theatre score: high gap = user will likely follow Want-Self at moment of decision |
 
-## Why Opus 4.6?
+## When To Use This
 
-MyPersona uses Opus 4.6's **extended thinking** with adaptive budget allocation:
+- You're building an AI agent that interacts with users over multiple sessions and needs to remember emotional context
+- You want to detect when a user says they'll do X but their behavior signals they'll actually do Y
+- You need memory that naturally prioritizes what mattered — not just what happened recently
+- You want human-in-the-loop governance over emotionally intense memories before they're stored
 
-```python
-thinking_budget = 5000                              # baseline
-    + theatre_score * 6000    # gap = more thinking
-    + intensity * 2000        # emotion = more thinking
-# capped at 16,000 tokens
-```
+## Quick Start
 
-When engines diverge (high theatre score) or emotions run hot, the agent automatically allocates more reasoning depth. Routine check-ins get minimal thinking. Crisis moments get deep deliberation. The agent reports this via its **introspective narration layer** — it tells you what it knows, what it's guessing, and where it's blind.
-
-## Features
-
-### Dual-Engine Signal Processing
-- **Mood Detector**: 20+ regex patterns for valence + arousal on the circumplex model
-- **Authority Graph**: tracks institutional, formal, personal, peer, and ambient authority sources with trust-weighted opinions (subjective logic)
-- **Compliance Detector**: "yes sir", "should", "have to" → Should-Self activation
-- **Reward Model**: approach/avoidance tracking → Want-Self activation
-- **Gap Analyzer**: measures divergence between engines, classifies severity, explains predicted behavior
-
-### Emotional Memory
-- **FadeMem Decay**: Ebbinghaus forgetting curve modulated by encoding weight — flashbulb memories persist for months, mundane ones fade in days
-- **A-Mem Linking**: Zettelkasten-inspired memory graph — new memories search for related memories and store bidirectional links
-- **Governance Gate**: memories with extreme encoding weight (flashbulb) or high conflict are held for human approval before storage
-
-### Introspective Narration
-The agent builds a self-model and reports:
-- **Mood confidence**: how sure it is about your emotional state
-- **Gap confidence**: how much data backs the divergence analysis
-- **Belief coverage**: fraction of topics with stable opinions
-- **Blind spots**: topics where uncertainty is high
-- **What would change its mind**: specific observations that would revise its model
-
-### Belief System
-- Bayesian belief network with subjective logic (belief, disbelief, uncertainty triples)
-- Trust discounting through authority chains
-- Evidence accumulation via cumulative fusion
-- Beliefs persist to disk and reload across sessions
-
-## Demo
-
-### Quick Start (no API keys needed)
 ```bash
-# Clone and set up
-git clone https://github.com/yourusername/mypersona.git
-cd mypersona
+git clone https://github.com/chrbailey/MyPersona.git
+cd MyPersona
 python3.11 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-# Run the scripted demo
+# Run the demo (no API keys needed)
 python3 -m demo.run_demo --fast
 ```
 
-### Demo Modes
+## MCP Server Integration
+
+MyPersona runs as an MCP server over stdio. Any MCP-compatible client (Claude Code, Claude Desktop, custom agents) can use it.
+
+### Register with Claude Code
+
 ```bash
-python3 -m demo.run_demo              # Normal pace (2s between turns)
-python3 -m demo.run_demo --fast       # No pauses
-python3 -m demo.run_demo --pace 0.5   # Custom pacing (for recording)
-python3 -m demo.run_demo --scenario 3 # Run single scenario
-python3 -m demo.run_demo --list       # List all scenarios
-python3 -m demo.run_demo --live       # Real Opus 4.6 API calls (needs key)
+claude mcp add mypersona -- python3.11 -m src.server
 ```
 
-### Five Scenarios
+### 12 Tools
 
-| # | Scenario | What It Shows |
-|---|----------|---------------|
-| 1 | The Compliant Employee | Authority shapes Engine 1 — boss + policy build the Should-Self |
-| 2 | The Hidden Passion | Engine 2 activates on shipping — approach signals, positive valence, elaboration |
-| 3 | Theatre Detection | Gap Layer surfaces the divergence — "you comply on docs but light up on shipping" |
-| 4 | Flashbulb Memory | Crisis triggers governance hold — intense memories need human approval |
-| 5 | The Self-Aware Agent | Introspective narration — the agent reports its own uncertainty and blind spots |
+| Tool | What It Does | When To Call It |
+|------|-------------|-----------------|
+| `ps_process_message` | Full pipeline: mood detection → belief extraction → dual-engine analysis → gap detection → introspection | Every user message — this is the main entry point |
+| `ps_get_mood` | Current emotional state (valence, arousal, quadrant, confidence, signals) | When you need the user's emotional state without running the full pipeline |
+| `ps_get_gap_analysis` | Engine divergence report — where stated values ≠ revealed behavior | After processing messages to check for self-discrepancy |
+| `ps_search_memories` | Semantic search with emotional decay and one-hop link expansion | When recalling relevant past interactions |
+| `ps_store_memory` | Store a memory with governance gate (intense memories held for human approval) | When a significant moment should be persisted |
+| `ps_get_beliefs` | Current belief network — Bayesian opinions with uncertainty | To understand the user's belief landscape |
+| `ps_get_encoding_weight` | How strongly the current emotional state would encode a memory | To preview whether a memory would trigger governance |
+| `ps_get_introspection` | Agent self-model: what it knows, what it's guessing, where it's blind | When the user asks "what do you know about me?" |
+| `ps_hold_list` | Pending governance holds — memories waiting for human approval | For dashboard/UI integration |
+| `ps_hold_approve` | Approve a held memory for storage | Human-in-the-loop decision |
+| `ps_hold_reject` | Reject a held memory | Human-in-the-loop decision |
+| `ps_get_audit_trail` | Full decision history — every gate decision, every hold resolution | For compliance and debugging |
 
-### Live Mode (with API key)
-```bash
-cp .env.example .env
-# Edit .env with your ANTHROPIC_API_KEY
-python3 -m src.agent
+### Example: Processing a Message
+
+```python
+# Via MCP tool call
+result = await call_tool("ps_process_message", {
+    "message": "My boss said documentation is the top priority for Q1",
+    "topics": ["documentation"]
+})
+# Returns: mood state, engine opinions, gap analysis, introspection
 ```
 
-Interactive CLI with real-time mood panel, gap alerts, and governance notifications.
+### Example: Detecting a Gap
 
-## Architecture
+After several interactions where a user complies on documentation but lights up when talking about shipping:
 
-```
-src/
-├── models.py    (379 lines)  Data models — MoodState, EngineOpinion, GapAnalysis,
-│                              EmotionalMemory, IntrospectiveNarration, HoldRequest
-├── engines.py   (825 lines)  Signal processing — MoodDetector, BeliefExtractor,
-│                              AuthorityGraph, ComplianceDetector, RewardModel,
-│                              GapAnalyzer, IntrospectiveLayer
-├── memory.py    (388 lines)  Storage + governance — MemoryStore (Pinecone),
-│                              GovernanceLayer, AuditTrail, emotional_decay()
-├── belief.py    (533 lines)  Bayesian belief system — TruthLayer, subjective logic,
-│                              trust discounting, evidence fusion
-├── agent.py     (835 lines)  Main agent loop — context assembly, tool dispatch,
-│                              Opus 4.6 adaptive thinking, CLI
-└── server.py    (466 lines)  MCP server — 12 tools over stdio for Claude Code
-
-tests/                        141 tests across 13 files (0.4s)
-demo/run_demo.py              5 scripted scenarios with Rich CLI rendering
+```python
+gap = await call_tool("ps_get_gap_analysis", {})
+# Returns:
+# {
+#   "theatre_score": 0.67,
+#   "topic_gaps": [{
+#     "topic": "documentation",
+#     "persona_opinion": 0.82,   # high — authority says it matters
+#     "reward_opinion": 0.31,    # low — no genuine engagement
+#     "gap_magnitude": 0.51,
+#     "conflict_severity": "significant",
+#     "predicted_behavior": "Will procrastinate on docs, prioritize shipping"
+#   }]
+# }
 ```
 
-**Total: ~3,400 LOC source + ~1,500 LOC tests + ~700 LOC demo**
+## Python Library Usage
+
+Use the components directly without MCP:
+
+```python
+from src.engines import MoodDetector, GapAnalyzer, PersonaEngine
+from src.memory import emotional_decay, GovernanceLayer
+from src.belief import TruthLayer
+
+# Detect mood from text
+mood = MoodDetector().detect("I can't believe it, everyone got laid off")
+# MoodState(valence=-0.95, arousal=+0.45, quadrant=STRESSED, confidence=0.9)
+
+# Compute how fast a memory fades
+retention = emotional_decay(hours=720, encoding_weight=1.5, intensity=0.9)
+# 0.47 — flashbulb memory still 47% retrievable after 30 days
+
+retention = emotional_decay(hours=720, encoding_weight=0.3, intensity=0.2)
+# 0.02 — mundane memory effectively gone after 30 days
+```
+
+## How It Works
+
+```
+User Message ──▶ Mood Detector ──▶ valence + arousal + signals
+                      │
+       ┌──────────────┼──────────────┐
+       ▼              ▼              ▼
+  Authority      Compliance      Belief
+    Graph         Detector       Extractor
+       │              │              │
+       ▼              ▼              ▼
+  ┌─────────────────────────────────────┐
+  │     Engine 1 — Persona (Should)     │
+  │  authority weight × trust + comply  │
+  └──────────────┬──────────────────────┘
+                 ▼
+  ┌─────────────────────────────────────┐
+  │        Gap Layer (Theatre)          │ ◀── divergence score
+  │   | persona - reward | per topic   │
+  └──────────────┬──────────────────────┘
+                 ▼
+  ┌─────────────────────────────────────┐
+  │     Engine 2 — Reward (Want)        │
+  │  valence × approach/avoid + reward  │
+  └──────────────┬──────────────────────┘
+                 │
+      ┌──────────┼──────────┐
+      ▼          ▼          ▼
+  Encoding   Governance  Introspective
+   Weight      Gate       Narration
+      │          │          │
+      ▼          ▼          ▼
+  ┌─────────────────────────────────────┐
+  │     Emotional Memory (Pinecone)     │
+  │  R = e^(-t/S), S ~ encoding weight │
+  └─────────────────────────────────────┘
+```
+
+### Key Concepts
+
+**Emotional Decay (FadeMem)**: Memories fade on an Ebbinghaus forgetting curve, modulated by emotional intensity. Flashbulb memories (encoding weight ~1.5) retain ~47% after 30 days. Mundane memories (encoding weight ~0.3) drop to ~2%. This means the agent's memory naturally self-curates over time — what mattered persists, what didn't dissolves.
+
+**Governance Gate**: Memories with extreme encoding weight (flashbulb events) or high engine conflict are held for human approval before storage. This prevents the agent from permanently encoding crisis moments or conflicted states without oversight.
+
+**Introspective Narration**: The agent builds a self-model and reports what it knows (confident), what it's guessing (moderate), and where it's blind (no data). Uses Opus 4.6 extended thinking with adaptive budget: more emotional complexity → more thinking tokens (5,000–16,000 range).
+
+**Subjective Logic**: Beliefs are represented as (belief, disbelief, uncertainty) triples, not simple probabilities. This means the agent distinguishes between "I believe X" and "I have no data about X" — both might show 50% probability, but uncertainty tells them apart.
 
 ## Research Foundations
 
-| Concept | Source | Implementation |
-|---------|--------|----------------|
-| Self-Discrepancy Theory | Higgins (1987) | Dual-engine architecture |
-| Ebbinghaus Forgetting Curve | FadeMem (2025) | `emotional_decay()` with encoding modulation |
-| Zettelkasten Memory Links | A-Mem (2024) | `search_with_links()` one-hop expansion |
-| Subjective Logic | Jøsang (2016) | Belief triples, trust discount, cumulative fusion |
-| Circumplex Model of Affect | Russell (1980) | 4-quadrant mood detection |
-| Introspective AI | Anthropic Research (2025) | Agent self-model with blind spot reporting |
-| Want/Should Conflict | Bazerman et al. (1998) | Gap layer predicts action-vs-intention |
+| Concept | Source | How It's Used |
+|---------|--------|---------------|
+| Self-Discrepancy Theory | Higgins (1987) | Dual-engine: Should-Self vs Want-Self |
+| Ebbinghaus Forgetting Curve | FadeMem (2025) | `emotional_decay()` — memories fade unless emotionally reinforced |
+| Zettelkasten Memory Links | A-Mem (2024) | Bidirectional memory graph with one-hop expansion on search |
+| Subjective Logic | Josang (2016) | Belief triples, trust discounting through authority chains |
+| Circumplex Model of Affect | Russell (1980) | 4-quadrant mood detection (excited/calm/stressed/low) |
+| Want/Should Conflict | Bazerman et al. (1998) | Gap layer predicts action vs. stated intention |
+
+## File Structure
+
+```
+src/
+├── models.py    (379 lines)   Data models — MoodState, EngineOpinion, GapAnalysis, etc.
+├── engines.py   (825 lines)   Signal processing — mood, authority, compliance, reward, gap
+├── memory.py    (388 lines)   Storage + governance — Pinecone, decay, audit trail
+├── belief.py    (533 lines)   Bayesian belief system — subjective logic, trust, fusion
+├── agent.py     (835 lines)   Agent loop — context assembly, Opus 4.6 adaptive thinking
+└── server.py    (466 lines)   MCP server — 12 tools over stdio
+
+tests/                         141 tests across 13 files (0.4s)
+demo/run_demo.py               5 scripted scenarios with Rich CLI rendering
+```
+
+## Demo
+
+Five scripted scenarios demonstrate the pipeline without API keys:
+
+```bash
+python3 -m demo.run_demo --fast       # All 5 scenarios, no pauses
+python3 -m demo.run_demo --scenario 3 # Single scenario
+python3 -m demo.run_demo --list       # List scenarios
+python3 -m demo.run_demo --live       # Real Opus 4.6 API (needs ANTHROPIC_API_KEY)
+```
+
+| # | Scenario | Demonstrates |
+|---|----------|-------------|
+| 1 | The Compliant Employee | Authority builds Engine 1 — boss + policy shape the Should-Self |
+| 2 | The Hidden Passion | Engine 2 activates — approach signals, positive valence, elaboration |
+| 3 | Theatre Detection | Gap Layer surfaces divergence: comply on docs, light up on shipping |
+| 4 | Flashbulb Memory | Crisis triggers governance hold — intense memory needs human approval |
+| 5 | The Self-Aware Agent | Introspective narration — agent reports uncertainty and blind spots |
 
 ## Tests
 
 ```bash
-python3 -m pytest tests/ -v       # 141 tests, ~0.4s
+python3 -m pytest tests/ -v    # 141 tests, ~0.4s
 ```
 
-Coverage includes:
-- Multi-turn pipeline integration (5-turn divergence buildup)
-- Governance gate decisions (flashbulb hold, conflict hold, resolve)
-- Emotional decay simulation (1hr → 3mo retention curves)
-- Gap analysis edge cases (aligned, max divergence, multi-topic)
-- Mood detector edge cases (mixed signals, caps rage, emoji, empty)
-- Belief system (strengthening, weakening, independence)
-- Encoding weight computation
+## Requirements
 
-## MCP Server
-
-MyPersona exposes 12 tools over MCP for integration with Claude Code or any MCP client:
-
-| Tool | Description |
-|------|-------------|
-| `ps_process_message` | Full pipeline: mood → beliefs → engines → gap → introspection |
-| `ps_get_mood` | Current emotional state with circumplex position |
-| `ps_get_gap_analysis` | Engine divergence report |
-| `ps_search_memories` | Semantic search with decay + link expansion |
-| `ps_store_memory` | Store with governance gate |
-| `ps_get_beliefs` | Current belief network state |
-| `ps_get_encoding_weight` | Compute encoding weight for current state |
-| `ps_get_introspection` | Self-model report |
-| `ps_hold_list` | Pending governance holds |
-| `ps_hold_approve` | Approve held memory |
-| `ps_hold_reject` | Reject held memory |
-| `ps_get_audit_trail` | Full decision history |
+- Python 3.11+
+- Dependencies: `anthropic`, `pinecone`, `rich`, `mcp`, `httpx`, `pyyaml`, `python-dotenv`
+- Optional: `ANTHROPIC_API_KEY` for live mode, `PINECONE_API_KEY` for persistent memory
 
 ## License
 
