@@ -1,8 +1,10 @@
 """
 Memory layer: Pinecone store, emotional timeline, governance (holds, trust zones, audit).
+Includes FadeMem-inspired emotional decay: memories fade unless emotionally reinforced.
 """
 
 import json
+import math
 import os
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -14,6 +16,26 @@ from .models import MoodState, EmotionalMemory, HoldRequest
 # =============================================================================
 # MEMORY STORE (Pinecone)
 # =============================================================================
+
+# =============================================================================
+# EMOTIONAL DECAY (FadeMem-inspired)
+# =============================================================================
+
+def emotional_decay(age_hours: float, encoding_weight: float, intensity: float) -> float:
+    """Ebbinghaus forgetting curve modulated by emotional significance.
+
+    R = e^(-t/S) where S (stability) scales with encoding weight and intensity.
+    Emotionally intense memories decay much slower than mundane ones.
+    """
+    if age_hours <= 0:
+        return 1.0
+    # Stability: base floor + multiplicative boost from emotional significance
+    # Base stability ~100 hours (~4 days half-life for mundane memories)
+    # Flashbulb memories (ew=1.5, intensity=1.0) get ~1500 hour stability (~2 months)
+    stability = 50.0 + 250.0 * encoding_weight + 500.0 * intensity * encoding_weight
+    retention = math.exp(-age_hours / stability)
+    return max(0.01, min(1.0, retention))
+
 
 class MemoryStore:
     def __init__(self, index_name: str = None, namespace: str = "memories"):
@@ -29,18 +51,85 @@ class MemoryStore:
             self._index = pc.Index(self.index_name)
         return self._index
 
-    def store(self, memory: EmotionalMemory) -> dict:
+    def store(self, memory: EmotionalMemory, link: bool = True) -> dict:
+        # A-Mem: find related memories and cross-link before storing
+        if link and memory.content:
+            try:
+                related = self.search(memory.content, limit=3, apply_decay=False)
+                memory.related_ids = [
+                    h.get("_id", "") for h in related
+                    if h.get("_id") and h.get("_score", 0) > 0.3
+                ][:5]
+            except Exception:
+                pass
+
         record = memory.to_pinecone_record()
         self.index.upsert_records(self.namespace, [record])
         return record
 
-    def search(self, query: str, limit: int = 5, filter_dict: Optional[dict] = None) -> List[dict]:
+    def search(self, query: str, limit: int = 5, filter_dict: Optional[dict] = None,
+               apply_decay: bool = True) -> List[dict]:
+        # Fetch more than needed so decay-based re-ranking has room
+        fetch_limit = limit * 3 if apply_decay else limit
         kwargs = {"namespace": self.namespace,
-                  "query": {"top_k": limit, "inputs": {"text": query}}}
+                  "query": {"top_k": fetch_limit, "inputs": {"text": query}}}
         if filter_dict:
             kwargs["query"]["filter"] = filter_dict
         results = self.index.search(**kwargs)
-        return [match for match in results.get("result", {}).get("hits", [])]
+        hits = [match for match in results.get("result", {}).get("hits", [])]
+
+        if apply_decay and hits:
+            now = datetime.utcnow()
+            for hit in hits:
+                fields = hit.get("fields", {})
+                created_str = fields.get("created_at", "")
+                try:
+                    created = datetime.fromisoformat(created_str)
+                    age_hours = (now - created).total_seconds() / 3600
+                except (ValueError, TypeError):
+                    age_hours = 0.0
+                ew = fields.get("encoding_weight", 0.5)
+                intensity = fields.get("intensity", 0.3)
+                retention = emotional_decay(age_hours, ew, intensity)
+                raw_score = hit.get("_score", 1.0)
+                hit["_score"] = raw_score * retention
+                hit["_retention"] = retention
+
+            hits.sort(key=lambda h: h.get("_score", 0), reverse=True)
+
+        return hits[:limit]
+
+    def search_with_links(self, query: str, limit: int = 5) -> List[dict]:
+        """Search with A-Mem link expansion — follow related_ids for one hop."""
+        hits = self.search(query, limit=limit)
+        if not hits:
+            return hits
+
+        # Collect linked IDs not already in results
+        seen_ids = {h.get("_id") for h in hits}
+        linked_ids = []
+        for hit in hits:
+            for rid in hit.get("fields", {}).get("related_ids", []):
+                if rid and rid not in seen_ids:
+                    linked_ids.append(rid)
+                    seen_ids.add(rid)
+
+        # Fetch linked memories (up to 3 extra)
+        if linked_ids:
+            try:
+                for lid in linked_ids[:3]:
+                    linked = self.get(lid)
+                    if linked:
+                        hits.append({
+                            "_id": lid,
+                            "_score": 0.0,  # no similarity score, linked via association
+                            "_linked": True,
+                            "fields": linked.get("metadata", linked),
+                        })
+            except Exception:
+                pass
+
+        return hits[:limit + 3]  # allow a few extra from links
 
     def get(self, memory_id: str) -> Optional[dict]:
         try:
@@ -152,6 +241,7 @@ def can_delete(memory: EmotionalMemory) -> bool:
 class GovernanceLayer:
     PROMOTION_THRESHOLD = 3
     CONFIDENCE_THRESHOLD = 0.7
+    ENCODING_WEIGHT_HOLD_THRESHOLD = 1.3  # flashbulb-level memories get held
 
     def __init__(self, data_dir: Path):
         self.holds_path = data_dir / "holds.json"
@@ -160,9 +250,37 @@ class GovernanceLayer:
         self._load_holds()
 
     def gate_memory_write(self, memory: EmotionalMemory) -> str:
+        # High-intensity memories always get held for review
+        if memory.encoding_weight >= self.ENCODING_WEIGHT_HOLD_THRESHOLD:
+            hold = HoldRequest(
+                action="store_memory", target_id=memory.memory_id,
+                reason=f"High encoding weight ({memory.encoding_weight:.2f}) — flashbulb-level emotional intensity",
+            )
+            self.holds.append(hold)
+            self._save_holds()
+            self._audit("hold_created", hold.hold_id,
+                        {"target": memory.memory_id, "encoding_weight": memory.encoding_weight}, "held")
+            return "held"
+
+        # High conflict also warrants review
+        if memory.conflict_score > 0.5:
+            hold = HoldRequest(
+                action="store_memory", target_id=memory.memory_id,
+                reason=f"High persona-reward conflict ({memory.conflict_score:.2f})",
+            )
+            self.holds.append(hold)
+            self._save_holds()
+            self._audit("hold_created", hold.hold_id,
+                        {"target": memory.memory_id, "conflict": memory.conflict_score}, "held")
+            return "held"
+
+        # Normal unverified memories pass through
         if memory.trust_zone == "unverified":
-            self._audit("memory_write", memory.memory_id, {"zone": "unverified"}, "allowed")
+            self._audit("memory_write", memory.memory_id,
+                        {"zone": "unverified", "encoding_weight": memory.encoding_weight}, "allowed")
             return "allowed"
+
+        # Promotion gate — need sufficient corroboration
         if memory.corroboration_count >= self.PROMOTION_THRESHOLD:
             self._audit("memory_promote", memory.memory_id,
                         {"corroboration": memory.corroboration_count}, "allowed")

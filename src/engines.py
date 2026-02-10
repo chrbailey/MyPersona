@@ -16,6 +16,7 @@ from .models import (
     MoodState, EmotionalQuadrant, AuthoritySource, AuthorityTier,
     ComplianceProfile, RewardProfile, RewardType, EncodingWeight,
     EngineOpinion, TopicGap, GapAnalysis, ApproachAvoidanceData,
+    IntrospectiveNarration,
 )
 from .belief import (
     Uncertainty, TruthLayer, trust_discount, probability_to_opinion,
@@ -52,6 +53,9 @@ class MoodDetector:
         "v_defeat":       (r"\b(give up|hopeless|pointless|impossible|can't win)\b", -0.5),
         "v_stress":       (r'\b(stress|overwhelm|burnout|burned out|burnt out)\w*', -0.35),
         "v_dread":        (r'\b(dread|doom|foreboding)\w*', -0.4),
+        "v_shock":        (r"\b(shock|stunned|numb|disbelief|can't believe)\b", -0.45),
+        "v_loss":         (r'\b(lost|gone|laid off|fired|terminated|let go|gutted|devastat)\w*', -0.5),
+        "v_grief":        (r'\b(grief|griev|mourning|crushed|shattered|broken)\w*', -0.45),
         "v_eager":        (r'\b(excited|thrilled|passionate|energized|pumped)\b', +0.35),
         "v_love":         (r'\b(love|adore)\b', +0.3),
         "v_hope":         (r'\b(hopeful|optimistic|looking forward)\b', +0.25),
@@ -69,6 +73,8 @@ class MoodDetector:
         "a_brevity":      (r'^.{1,10}$', -0.1),
         "a_pressure":     (r'\b(deadline|pressure|crunch|rush|time.?sensitive)\b', +0.25),
         "a_overwhelm":    (r"\b(overwhelm|too much|can't keep up|drowning)\w*", +0.2),
+        "a_shock":        (r"\b(shock|can't believe|what the|oh my god|omg)\b", +0.35),
+        "a_crisis":       (r'\b(crisis|emergency|catastroph|disaster|laid off|fired)\w*', +0.3),
     }
 
     def detect(self, text: str) -> MoodState:
@@ -727,3 +733,93 @@ def compute_encoding_weight(
     conflict = abs(authority_relevance - reward_alignment)
     return EncodingWeight(flashbulb=flashbulb, authority_relevance=authority_relevance,
                          reward_alignment=reward_alignment, conflict_score=conflict)
+
+
+# =============================================================================
+# INTROSPECTIVE LAYER ("What I Know I Don't Know")
+# =============================================================================
+
+class IntrospectiveLayer:
+    """Generates the agent's self-model — structured uncertainty about its own reads.
+
+    This is the meta-cognitive layer: instead of just reporting "you feel X",
+    it reports "I'm 60% sure you feel X, and here's what's limiting my read."
+    """
+
+    def analyze(
+        self,
+        mood: Optional['MoodState'],
+        gap_analysis: Optional[GapAnalysis],
+        persona_opinions: Dict[str, EngineOpinion],
+        reward_opinions: Dict[str, EngineOpinion],
+        truth_layer: 'TruthLayer',
+        thinking_budget: int = 5000,
+    ) -> IntrospectiveNarration:
+        narration = IntrospectiveNarration()
+        narration.thinking_budget_used = thinking_budget
+
+        # Mood confidence: based on signal count and mood detector confidence
+        if mood:
+            narration.mood_confidence = mood.confidence
+            if mood.signals:
+                narration.strongest_signal = mood.signals[0]
+        else:
+            narration.mood_confidence = 0.0
+
+        # Gap confidence: based on observation count across topics
+        if gap_analysis and gap_analysis.topic_gaps:
+            obs_counts = [g.observations for g in gap_analysis.topic_gaps]
+            avg_obs = sum(obs_counts) / len(obs_counts)
+            narration.gap_confidence = min(0.95, avg_obs / 10.0)
+        else:
+            narration.gap_confidence = 0.0
+
+        # Belief coverage: what fraction of active topics have sufficient data
+        all_topics = set(persona_opinions.keys()) | set(reward_opinions.keys())
+        if all_topics:
+            covered = 0
+            for topic in all_topics:
+                belief = truth_layer.get_belief(topic)
+                if belief and belief.variance < 0.15:
+                    covered += 1
+            narration.belief_coverage = covered / len(all_topics)
+        else:
+            narration.belief_coverage = 0.0
+
+        # Blind spots: topics with high uncertainty in either engine
+        blind = []
+        for topic in all_topics:
+            p = persona_opinions.get(topic)
+            r = reward_opinions.get(topic)
+            if p and p.uncertainty > 0.35:
+                blind.append(f"{topic} (persona uncertain)")
+            elif r and r.uncertainty > 0.35:
+                blind.append(f"{topic} (reward uncertain)")
+            elif not p or not r:
+                blind.append(f"{topic} (single-engine only)")
+        narration.blind_spots = blind[:5]
+
+        # What would change my mind
+        changes = []
+        if narration.mood_confidence < 0.5:
+            changes.append("more emotional signals in the message (exclamations, explicit feelings)")
+        if narration.gap_confidence < 0.3:
+            changes.append("several more conversations about these topics to separate persona from reward")
+        for topic in all_topics:
+            p = persona_opinions.get(topic)
+            r = reward_opinions.get(topic)
+            if p and r and abs(p.expected_value - r.expected_value) > 0.3:
+                if p.uncertainty > 0.25 or r.uncertainty > 0.25:
+                    changes.append(f"clearer signal on '{topic}' — the gap could be noise or real")
+                    break
+        narration.would_change_mind = changes[:3]
+
+        # Reasoning depth label
+        if thinking_budget >= 12000:
+            narration.reasoning_depth = "deep"
+        elif thinking_budget >= 7000:
+            narration.reasoning_depth = "deliberate"
+        else:
+            narration.reasoning_depth = "routine"
+
+        return narration

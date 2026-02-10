@@ -125,3 +125,72 @@ def test_encoding_weight():
     ew = compute_encoding_weight(mood, authority, reward, compliance, "shipping")
     assert ew.total_weight > 0
     assert ew.flashbulb > 0.5  # High arousal = high flashbulb
+
+
+def test_introspective_layer_low_data():
+    """With minimal data, introspection should show low confidence and blind spots."""
+    from src.engines import IntrospectiveLayer
+    from src.belief import TruthLayer
+    layer = IntrospectiveLayer()
+    mood = MoodState(valence=0.2, arousal=0.1, confidence=0.3,
+                     quadrant=EmotionalQuadrant.NEUTRAL, signals=["v_satisfaction"])
+    tl = TruthLayer()
+
+    persona = {"work": EngineOpinion(topic="work", belief=0.5, disbelief=0.1,
+                                     uncertainty=0.4, source_signals=[])}
+    reward = {"work": EngineOpinion(topic="work", belief=0.6, disbelief=0.1,
+                                    uncertainty=0.3, source_signals=[])}
+    narration = layer.analyze(mood, None, persona, reward, tl, thinking_budget=5000)
+
+    assert narration.mood_confidence == 0.3
+    assert narration.gap_confidence == 0.0  # no gap analysis
+    assert len(narration.blind_spots) >= 1  # work has high uncertainty
+    assert narration.reasoning_depth == "routine"
+    assert "guessing" in narration.narrative()
+
+
+def test_introspective_layer_high_data():
+    """With solid data, introspection should show high confidence."""
+    from src.engines import IntrospectiveLayer
+    from src.models import GapAnalysis, TopicGap
+    from src.belief import TruthLayer
+
+    layer = IntrospectiveLayer()
+    mood = MoodState(valence=0.5, arousal=0.3, confidence=0.85,
+                     quadrant=EmotionalQuadrant.EXCITED,
+                     signals=["v_excitement", "v_satisfaction", "a_intensity"])
+    tl = TruthLayer()
+    tl.add_claim("shipping", "Shipping is important", "work")
+    for _ in range(10):
+        tl.validate("shipping", "confirm")
+
+    persona = {"shipping": EngineOpinion(topic="shipping", belief=0.8, disbelief=0.1,
+                                         uncertainty=0.1, source_signals=["authority:boss"])}
+    reward = {"shipping": EngineOpinion(topic="shipping", belief=0.7, disbelief=0.1,
+                                        uncertainty=0.2, source_signals=[])}
+    gap = GapAnalysis(topic_gaps=[
+        TopicGap(topic="shipping", persona_opinion=0.85, reward_opinion=0.75,
+                 gap_magnitude=0.1, gap_direction="persona_leads",
+                 conflict_severity="none", explanation="aligned", observations=12)
+    ])
+
+    narration = layer.analyze(mood, gap, persona, reward, tl, thinking_budget=12000)
+
+    assert narration.mood_confidence == 0.85
+    assert narration.gap_confidence > 0.5
+    assert narration.reasoning_depth == "deep"
+    assert "confident" in narration.narrative()
+
+
+def test_introspective_narration_narrative():
+    """Test the human-readable narrative generation."""
+    from src.models import IntrospectiveNarration
+    n = IntrospectiveNarration(
+        mood_confidence=0.3, gap_confidence=0.2, belief_coverage=0.1,
+        blind_spots=["career (persona uncertain)", "health (single-engine only)"],
+        would_change_mind=["more emotional signals"],
+    )
+    text = n.narrative()
+    assert "guessing" in text
+    assert "career" in text
+    assert "change my read" in text

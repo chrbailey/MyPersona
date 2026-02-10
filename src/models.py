@@ -273,6 +273,55 @@ class ApproachAvoidanceData:
 
 
 @dataclass
+class IntrospectiveNarration:
+    """The agent's self-model: what it knows, what it's guessing, what's blind."""
+    mood_confidence: float = 0.0         # how sure the agent is about the mood read
+    gap_confidence: float = 0.0          # how sure about the persona-reward gap
+    belief_coverage: float = 0.0         # fraction of topics with enough data
+    blind_spots: List[str] = field(default_factory=list)     # topics with high epistemic uncertainty
+    strongest_signal: str = ""           # the single most informative signal this turn
+    would_change_mind: List[str] = field(default_factory=list)  # what new info would shift the read
+    thinking_budget_used: int = 0        # tokens allocated to reasoning
+    reasoning_depth: str = "routine"     # "routine" | "deliberate" | "deep"
+
+    @property
+    def overall_confidence(self) -> float:
+        return (self.mood_confidence + self.gap_confidence + self.belief_coverage) / 3
+
+    def to_dict(self) -> dict:
+        return {
+            "mood_confidence": round(self.mood_confidence, 3),
+            "gap_confidence": round(self.gap_confidence, 3),
+            "belief_coverage": round(self.belief_coverage, 3),
+            "overall_confidence": round(self.overall_confidence, 3),
+            "blind_spots": self.blind_spots,
+            "strongest_signal": self.strongest_signal,
+            "would_change_mind": self.would_change_mind,
+            "reasoning_depth": self.reasoning_depth,
+        }
+
+    def narrative(self) -> str:
+        """Human-readable self-assessment."""
+        parts = []
+        if self.mood_confidence > 0.7:
+            parts.append("I'm fairly confident about how you're feeling right now")
+        elif self.mood_confidence > 0.4:
+            parts.append("I have a rough read on your mood but could be off")
+        else:
+            parts.append("I'm mostly guessing about your emotional state")
+
+        if self.blind_spots:
+            spots = ", ".join(self.blind_spots[:3])
+            parts.append(f"I lack data on: {spots}")
+
+        if self.would_change_mind:
+            shifts = "; ".join(self.would_change_mind[:2])
+            parts.append(f"What would change my read: {shifts}")
+
+        return ". ".join(parts) + "."
+
+
+@dataclass
 class EmotionalMemory:
     memory_id: str = field(default_factory=lambda: str(uuid.uuid4())[:12])
     user_id: str = "default"
@@ -290,6 +339,7 @@ class EmotionalMemory:
     reward_opinion: float = 0.5
     gap_magnitude: float = 0.0
     gap_direction: str = ""
+    related_ids: List[str] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.utcnow)
 
     def to_pinecone_record(self) -> dict:
@@ -310,6 +360,7 @@ class EmotionalMemory:
             "reward_opinion": self.reward_opinion,
             "gap_magnitude": self.gap_magnitude,
             "gap_direction": self.gap_direction,
+            "related_ids": self.related_ids,
             "topic_tags": self.topic_tags,
             "session_id": self.session_id,
             "created_at": self.created_at.isoformat(),

@@ -19,14 +19,15 @@ import anthropic
 
 from .models import (
     MoodState, GapAnalysis, EngineOpinion, EmotionalQuadrant,
-    EmotionalMemory, AuthorityTier, TopicGap,
+    EmotionalMemory, AuthorityTier, TopicGap, EncodingWeight,
+    IntrospectiveNarration,
 )
 from .belief import TruthLayer, decompose_from_beta
 from .engines import (
     MoodDetector, BeliefExtractor,
     AuthorityGraph, ComplianceDetector, RewardModel,
     ApproachAvoidanceDetector, PersonaEngine, GapAnalyzer,
-    compute_encoding_weight, TOPIC_TO_REWARD_MAP,
+    compute_encoding_weight, IntrospectiveLayer, TOPIC_TO_REWARD_MAP,
 )
 from .memory import (
     MemoryStore, TimelineManager,
@@ -74,6 +75,14 @@ When responding:
 - Be honest about uncertainty. If you have limited data, say so: "I've only seen
   a few interactions on this topic — my read could shift as I learn more about you."
 - If a governance hold is created, explain it simply
+- CHECK YOUR SELF-MODEL. The `self_model` section in the context shows your own
+  confidence levels and blind spots. When your mood_confidence is below 0.5,
+  say so explicitly: "I'm reading you as [X] but I'm not very sure." When you
+  have blind_spots listed, acknowledge them naturally: "I don't have much data
+  on [topic] yet." This transparency builds trust and is more honest than
+  projecting false certainty.
+- Your reasoning_depth shows how much thinking budget was allocated. "deep"
+  means a complex emotional situation was detected — take extra care.
 
 IMPORTANT: You track two kinds of uncertainty for every belief:
 - Epistemic: "We don't know enough yet" → gathering more context helps
@@ -163,6 +172,7 @@ def assemble_context(
     recent_memories: list,
     authority_info: dict,
     mood_trend: dict,
+    narration: Optional[IntrospectiveNarration] = None,
 ) -> str:
     context = {}
 
@@ -219,6 +229,15 @@ def assemble_context(
             m.get("content", "")[:100] for m in recent_memories[:3]
         ]
 
+    if narration:
+        context["self_model"] = {
+            "confidence": narration.narrative(),
+            "mood_confidence": round(narration.mood_confidence, 2),
+            "gap_confidence": round(narration.gap_confidence, 2),
+            "reasoning_depth": narration.reasoning_depth,
+            "blind_spots": narration.blind_spots[:3],
+        }
+
     return yaml.dump(context, default_flow_style=False, sort_keys=False)
 
 
@@ -242,12 +261,15 @@ class EmotionalMemoryAgent:
         self.approach_avoidance = ApproachAvoidanceDetector(self.data_dir)
         self.persona_engine = PersonaEngine(self.truth_layer, self.authority, self.compliance)
         self.gap_analyzer = GapAnalyzer(self.data_dir)
+        self.introspective = IntrospectiveLayer()
         self.memory_store = MemoryStore()
         self.timeline = TimelineManager(self.data_dir)
         self.governance = GovernanceLayer(self.data_dir)
 
         self.current_mood: Optional[MoodState] = None
         self.current_gap: Optional[GapAnalysis] = None
+        self.current_encoding: Optional[EncodingWeight] = None
+        self.current_narration: Optional[IntrospectiveNarration] = None
         self.persona_opinions: Dict[str, EngineOpinion] = {}
         self.reward_opinions: Dict[str, EngineOpinion] = {}
         self.messages: List[dict] = []
@@ -307,8 +329,8 @@ class EmotionalMemoryAgent:
             reward_cat = TOPIC_TO_REWARD_MAP.get(topic, topic)
             self.reward.observe(reward_cat, self.current_mood.valence)
 
-        # 9. Compute encoding weight (was missing — now wired up)
-        ew = compute_encoding_weight(
+        # 9. Compute encoding weight and store on agent for tool access
+        self.current_encoding = compute_encoding_weight(
             self.current_mood,
             next(iter(self.authority.sources.values()), None),
             self.reward.profile,
@@ -316,7 +338,18 @@ class EmotionalMemoryAgent:
             topics[0] if topics else "general",
         )
 
-        # 10. Search recent memories (was always empty — now wired up)
+        # 10. Introspective self-model
+        budget = self._thinking_budget()
+        self.current_narration = self.introspective.analyze(
+            mood=self.current_mood,
+            gap_analysis=self.current_gap,
+            persona_opinions=self.persona_opinions,
+            reward_opinions=self.reward_opinions,
+            truth_layer=self.truth_layer,
+            thinking_budget=budget,
+        )
+
+        # 11. Search recent memories
         recent_memories = []
         try:
             hits = self.memory_store.search(user_message, limit=3)
@@ -330,7 +363,7 @@ class EmotionalMemoryAgent:
         except Exception:
             pass
 
-        # 11. Build context
+        # 12. Build context
         beliefs_summary = {"beliefs": {}}
         for cid, b in self.truth_layer.net.beliefs.items():
             beliefs_summary["beliefs"][cid] = {"text": b.text, "probability": b.probability}
@@ -348,20 +381,32 @@ class EmotionalMemoryAgent:
             mood=self.current_mood, beliefs_summary=beliefs_summary,
             gap_analysis=self.current_gap, recent_memories=recent_memories,
             authority_info=authority_info, mood_trend=self.timeline.get_trend(),
+            narration=self.current_narration,
         )
 
-        # 12. Call Claude
+        # 13. Call Claude
         system_prompt = SYSTEM_PROMPT.format(context_yaml=context_yaml)
         self.messages.append({"role": "user", "content": user_message})
         return self._call_claude(system_prompt)
 
+    def _thinking_budget(self) -> int:
+        """Scale thinking budget with emotional complexity."""
+        base = 5000
+        if self.current_gap and self.current_gap.theatre_score > 0.3:
+            base += int(self.current_gap.theatre_score * 6000)
+        if self.current_mood and self.current_mood.intensity > 0.5:
+            base += int(self.current_mood.intensity * 2000)
+        return min(16000, base)
+
     def _call_claude(self, system_prompt: str) -> str:
         model = os.getenv("CLAUDE_MODEL", "claude-opus-4-6")
-        max_tokens = int(os.getenv("CLAUDE_MAX_TOKENS", "4096"))
+        max_tokens = int(os.getenv("CLAUDE_MAX_TOKENS", "16000"))
+        budget = self._thinking_budget()
 
         response = self.client.messages.create(
             model=model, max_tokens=max_tokens, system=system_prompt,
-            tools=AGENT_TOOLS, messages=self.messages, temperature=0.7,
+            tools=AGENT_TOOLS, messages=self.messages, temperature=1.0,
+            thinking={"type": "enabled", "budget_tokens": budget},
         )
 
         for _ in range(10):
@@ -379,10 +424,14 @@ class EmotionalMemoryAgent:
             self.messages.append({"role": "user", "content": tool_results})
             response = self.client.messages.create(
                 model=model, max_tokens=max_tokens, system=system_prompt,
-                tools=AGENT_TOOLS, messages=self.messages, temperature=0.7,
+                tools=AGENT_TOOLS, messages=self.messages, temperature=1.0,
+                thinking={"type": "enabled", "budget_tokens": budget},
             )
 
-        final_text = "".join(block.text for block in response.content if hasattr(block, "text"))
+        final_text = "".join(
+            block.text for block in response.content
+            if hasattr(block, "text") and block.type == "text"
+        )
         self.messages.append({"role": "assistant", "content": response.content})
         return final_text
 
@@ -443,13 +492,14 @@ class EmotionalMemoryAgent:
 
     def _tool_search_memories(self, query: str, include_mood: bool = True, limit: int = 5) -> dict:
         try:
-            results = self.memory_store.search(query, limit=limit)
+            results = self.memory_store.search_with_links(query, limit=limit)
             memories = []
             for hit in results:
                 fields = hit.get("fields", {})
                 entry = {"id": hit.get("_id", ""), "content": fields.get("content", ""),
                          "trust_zone": fields.get("trust_zone", "unverified"),
-                         "encoding_weight": fields.get("encoding_weight", 0.5)}
+                         "encoding_weight": fields.get("encoding_weight", 0.5),
+                         "linked": hit.get("_linked", False)}
                 if include_mood:
                     entry.update({"valence": fields.get("valence", 0.0),
                                   "arousal": fields.get("arousal", 0.0),
@@ -460,18 +510,35 @@ class EmotionalMemoryAgent:
             return {"error": str(e), "memories": []}
 
     def _tool_store_memory(self, content: str, topic_tags: list = None) -> dict:
+        tags = topic_tags or []
+        # Compute gap data for the first matching topic
+        gap_mag, gap_dir, p_op, r_op = 0.0, "", 0.5, 0.5
+        if self.current_gap:
+            for g in self.current_gap.topic_gaps:
+                if g.topic in tags or not tags:
+                    gap_mag, gap_dir = g.gap_magnitude, g.gap_direction
+                    p_op, r_op = g.persona_opinion, g.reward_opinion
+                    break
+
+        ew = self.current_encoding
         memory = EmotionalMemory(
             content=content, mood=self.current_mood,
-            topic_tags=topic_tags or [], session_id=self.session_id,
+            topic_tags=tags, session_id=self.session_id,
+            encoding_weight=ew.total_weight if ew else 0.5,
+            conflict_score=ew.conflict_score if ew else 0.0,
+            persona_opinion=p_op, reward_opinion=r_op,
+            gap_magnitude=gap_mag, gap_direction=gap_dir,
         )
         gate_result = self.governance.gate_memory_write(memory)
         if gate_result == "held":
             return {"status": "held", "memory_id": memory.memory_id,
-                    "reason": "Memory held for governance review"}
+                    "reason": "Memory held for governance review",
+                    "encoding_weight": memory.encoding_weight}
         try:
             self.memory_store.store(memory)
             return {"status": "stored", "memory_id": memory.memory_id,
-                    "encoding_weight": memory.encoding_weight}
+                    "encoding_weight": memory.encoding_weight,
+                    "conflict_score": memory.conflict_score}
         except Exception as e:
             return {"status": "error", "error": str(e)}
 
@@ -665,6 +732,17 @@ def _render_mood_panel(mood: MoodState, agent: 'EmotionalMemoryAgent') -> str:
                  "declining": "[red]trending down[/red]"}.get(
             trend["direction"], f"[dim]{trend['direction']}[/dim]")
         lines.append(f"  trend    {arrow}")
+
+    # Introspective self-model
+    if agent.current_narration:
+        n = agent.current_narration
+        conf_color = "green" if n.overall_confidence > 0.6 else "yellow" if n.overall_confidence > 0.3 else "red"
+        lines.append(f"  self     [{conf_color}]{n.reasoning_depth}[/{conf_color}]"
+                     f" [dim]conf={n.overall_confidence:.0%}"
+                     f" mood={n.mood_confidence:.0%}"
+                     f" gap={n.gap_confidence:.0%}[/dim]")
+        if n.blind_spots:
+            lines.append(f"  blind    [dim]{', '.join(n.blind_spots[:2])}[/dim]")
 
     return "\n".join(lines)
 

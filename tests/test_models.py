@@ -94,6 +94,26 @@ def test_emotional_memory():
     record = mem.to_pinecone_record()
     assert record["content"] == "test memory"
     assert record["valence"] == -0.5
+    assert record["related_ids"] == []
+
+
+def test_emotional_memory_with_links():
+    mem = EmotionalMemory(content="linked memory", related_ids=["mem_a", "mem_b"])
+    record = mem.to_pinecone_record()
+    assert record["related_ids"] == ["mem_a", "mem_b"]
+
+
+def test_introspective_narration():
+    from src.models import IntrospectiveNarration
+    n = IntrospectiveNarration(
+        mood_confidence=0.8, gap_confidence=0.6, belief_coverage=0.5,
+        blind_spots=[], strongest_signal="v_excitement",
+        reasoning_depth="deliberate", thinking_budget_used=8000,
+    )
+    assert n.overall_confidence > 0.6
+    assert "confident" in n.narrative()
+    d = n.to_dict()
+    assert d["reasoning_depth"] == "deliberate"
 
 
 def test_hold_request():
