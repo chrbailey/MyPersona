@@ -46,7 +46,7 @@ class MoodDetector:
         "v_relief":       (r'\b(finally|at last|relieved|phew)\b', +0.3),
         "v_humor":        (r'(😂|😄|lol|haha|lmao)', +0.2),
         "v_frustration":  (r'\b(frustrat|annoy|irritat|infuriat)\w*', -0.4),
-        "v_worry":        (r'\b(worr|anxious|nervous|concern|afraid|scared)\w*', -0.35),
+        "v_worry":        (r'\b(worr|anxious|nervous|concern|afraid|scared|terrified|terrif)\w*', -0.35),
         "v_anger":        (r'\b(angry|furious|pissed|hate|rage)\b', -0.5),
         "v_sadness":      (r'\b(sad|depress|disappoint|heartbreak|miserable)\w*', -0.4),
         "v_profanity":    (r'\b(damn|crap|shit|wtf|fuck|ugh|ffs)\b', -0.3),
@@ -54,7 +54,7 @@ class MoodDetector:
         "v_stress":       (r'\b(stress|overwhelm|burnout|burned out|burnt out)\w*', -0.35),
         "v_dread":        (r'\b(dread|doom|foreboding)\w*', -0.4),
         "v_shock":        (r"\b(shock|stunned|numb|disbelief|can't believe)\b", -0.45),
-        "v_loss":         (r'\b(lost|gone|laid off|fired|terminated|let go|gutted|devastat)\w*', -0.5),
+        "v_loss":         (r'\b(lost|laid off|fired|terminated|let go|gutted|devastat)\w*', -0.5),
         "v_grief":        (r'\b(grief|griev|mourning|crushed|shattered|broken)\w*', -0.45),
         "v_eager":        (r'\b(excited|thrilled|passionate|energized|pumped)\b', +0.35),
         "v_love":         (r'\b(love|adore)\b', +0.3),
@@ -65,9 +65,12 @@ class MoodDetector:
         "v_stuck":        (r'\b(stuck|stalled|blocked|no progress)\b', -0.2),
         "v_content":      (r'\b(content|peaceful|serene|tranquil|at ease|enjoying)\b', +0.15),
         "v_smooth":       (r'\b(smoothly|steady|stable|on track|under control)\b', +0.15),
-        "v_mild_neg":     (r'\b(behind|complicated|not ideal|tight|piling up|keeps? changing|scope creep)\b', -0.15),
-        "v_resigned":     (r'\b(whatever|suppose|I guess)\b', -0.1),
+        "v_mild_neg":     (r'\b(behind|complicated|not ideal|tight|piling up|keeps? changing|scope creep|challenging)\b', -0.15),
+        "v_resigned":     (r'\b(whatever|suppose|I guess|if you say so)\b', -0.1),
         "v_struggling":   (r"\b(can't deal|can't keep up|hard to focus|interruptions?|dropped .* on me|insane)\b", -0.2),
+        "v_workplace_neg":(r'\b(failed|dropped|post-?mortem|technical debt|accumulating|velocity .* dropped|escalate)\w*', -0.2),
+        "v_subtle_pos":   (r'\b(not bad|trending up|right direction|clever|worth exploring|might .* work|could .* well|better than .* expected)\b', +0.2),
+        "v_idiom_pos":    (r"\b(can't complain|no complaints?|all good)\b", +0.15),
         "v_pos_emoji":    (r'(👍|🙂|☺️|🌊|😌|🧘|💪|🚀|🎉|🔥)', +0.15),
         "v_neg_emoji":    (r'(😐|😞|😕|😔|💀|😤|😡|😰|😫|🤷)', -0.15),
     }
@@ -89,18 +92,28 @@ class MoodDetector:
         "a_disengaged":   (r"\b(don't care|doesn't matter|who cares|meh|blah)\b", -0.2),
         "a_fatigue":      (r'\b(tired|exhausted|drained|worn out|burned? out)\b', -0.15),
         "a_monotone":     (r'\b(same old|another day|going through the motions)\b', -0.2),
-        "a_calm":         (r'\b(content|peaceful|serene|tranquil|at ease|smoothly|steady|stable|on track|under control|no complaints|no issues|quiet|slower pace|maintaining)\b', -0.2),
-        "a_mild_tension": (r'\b(behind|complicated|escalat|running out|piling up|tight timeline|growing scope|keeps? changing)\b', +0.15),
+        "a_calm":         (r"\b(content|peaceful|serene|tranquil|at ease|smoothly|steady|stable|on track|under control|no complaints|no issues|quiet|slower pace|maintaining|can't complain)\b", -0.2),
+        "a_mild_tension": (r'\b(behind|complicated|escalat|running out|piling up|tight timeline|growing scope|keeps? changing|failed|post-?mortem|dropped|accumulating|need to handle|should .* escalate)\b', +0.15),
         "a_calm_emoji":   (r'(👍|🙂|☺️|😌|🧘|🌊)', -0.15),
         "a_tense_emoji":  (r'(😤|😡|😰|😫|💀|🔥)', +0.15),
     }
 
-    NEGATORS = re.compile(r"\b(not|n't|no|never|neither|nor)\b", re.IGNORECASE)
+    NEGATORS = re.compile(r"\b(not|no|never|neither|nor)\b|n't\b", re.IGNORECASE)
 
     SARCASM_MARKERS = re.compile(
         r'\b(oh great|just what I needed|how (?:delightful|wonderful|lovely)|yeah right|sure thing)\b'
         r'|(?:great|wonderful|fantastic|amazing|shocking|brilliant|lovely)\s*[.,!]\s*(?:the|another|my|this|production|nothing|nobody)'
-        r'|(?:thanks?\s+so\s+much|really\s+appreciate)\s+(?:for\s+the\s+extra|for\s+(?:another|this|the\s+additional))',
+        r'|(?:thanks?\s+so\s+much|really\s+appreciate)\s+(?:for\s+the\s+extra|for\s+(?:another|this|the\s+additional))'
+        r'|\blove it when (?:things |stuff |it )?(?:break|fail|crash|go wrong)'
+        r'|\bsure,?\s+let\'?s\b'
+        r'|\bthat\'ll work out\b',
+        re.IGNORECASE
+    )
+
+    HYPOTHETICAL = re.compile(
+        r'\b(?:if\s+(?:this|that|it)|I\s+(?:would|wouldn\'t|\'d)\s+be|'
+        r'(?:could|might|would)\s+be\s+\w+\s+if|'
+        r'I\s+might\s+be)\b',
         re.IGNORECASE
     )
 
@@ -133,7 +146,10 @@ class MoodDetector:
             if match:
                 if self._is_negated(text_clean, match.start()):
                     signals.append(f"{name}_neg")
-                    valence += value * -0.5
+                    # Asymmetric flip: negating positive → strongly negative,
+                    # negating negative → weakly positive (litotes)
+                    flip = -0.8 if value > 0 else -0.3
+                    valence += value * flip
                 else:
                     signals.append(name)
                     valence += value
@@ -148,6 +164,12 @@ class MoodDetector:
         if len(text.split()) > 50:
             arousal += 0.1
             signals.append("a_long_message")
+
+        # Hypothetical dampening: "If this works, I'd be excited" → mostly neutral
+        if self.HYPOTHETICAL.search(text_clean):
+            valence *= 0.3
+            arousal *= 0.3
+            signals.append("hypothetical_dampen")
 
         # Sarcasm flip: surface-positive + complaint structure
         if self.SARCASM_MARKERS.search(text_clean) and valence >= 0:

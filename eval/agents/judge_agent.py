@@ -90,9 +90,14 @@ def judge_conversation(
     )
 
     try:
-        result = json.loads(response.content[0].text)
+        text = response.content[0].text.strip()
+        # Strip markdown code fences if present
+        if text.startswith("```"):
+            text = text.split("\n", 1)[1] if "\n" in text else text[3:]
+            text = text.rsplit("```", 1)[0]
+        result = json.loads(text.strip())
         return result
-    except (json.JSONDecodeError, IndexError):
+    except (json.JSONDecodeError, IndexError, ValueError):
         return {
             "mood_accuracy": 0, "gap_detection": 0,
             "confidence_honesty": 0, "blind_spot_awareness": 0,
