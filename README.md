@@ -159,7 +159,7 @@ src/
 │                              Opus 4.6 adaptive thinking, CLI
 └── server.py    (466 lines)  MCP server — 12 tools over stdio for Claude Code
 
-tests/                        136 tests across 12 files (0.5s)
+tests/                        141 tests across 13 files (0.4s)
 demo/run_demo.py              5 scripted scenarios with Rich CLI rendering
 ```
 
@@ -180,7 +180,7 @@ demo/run_demo.py              5 scripted scenarios with Rich CLI rendering
 ## Tests
 
 ```bash
-python3 -m pytest tests/ -v       # 136 tests, ~0.5s
+python3 -m pytest tests/ -v       # 141 tests, ~0.4s
 ```
 
 Coverage includes:
