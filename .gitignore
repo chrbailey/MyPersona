@@ -22,3 +22,6 @@ truth_layer.json
 *.egg-info/
 dist/
 build/
+
+# Demo videos (large binaries)
+*.mp4
