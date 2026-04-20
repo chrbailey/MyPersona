@@ -6,6 +6,8 @@ MyPersona is a Python library and MCP server that gives AI agents emotional inte
 
 **Built with Claude Opus 4.6** | MIT License | ~3,400 LOC | 141 tests
 
+**Status:** v0.2 experimental. Core pipeline (mood detection, dual engines, gap analysis, governance) is test-covered and works offline. Pinecone-backed memory storage requires a `PINECONE_API_KEY`; the agent loop requires `ANTHROPIC_API_KEY`. See "What this is NOT" below for scope limits.
+
 ![MyPersona Demo](demo/demo.gif)
 
 ## What Problem Does This Solve?
@@ -32,7 +34,14 @@ MyPersona solves this with a **dual-engine architecture** based on Self-Discrepa
 - You need memory that naturally prioritizes what mattered — not just what happened recently
 - You want human-in-the-loop governance over emotionally intense memories before they're stored
 
-## Quick Start
+## What This Is NOT
+
+- **Not a production-ready memory backend.** Pinecone is optional; without it memory features are limited to in-process state plus the local SQLite timeline.
+- **Not a clinical or diagnostic tool.** "Mood", "gap" and "theatre score" are useful engineering signals, not psychological assessments.
+- **Not model-agnostic.** The agent loop assumes Claude Opus 4.6 extended thinking. The pure-Python engines (mood, dual-engine, gap, decay) do not need an LLM and can be used standalone.
+- **Not an MCP memory store like `knowledge-store`.** MyPersona models *emotional state and conflict*. Pair it with a retrieval store — it does not replace one.
+
+## Quick Start (60 seconds)
 
 ```bash
 git clone https://github.com/chrbailey/MyPersona.git
@@ -40,7 +49,10 @@ cd MyPersona
 python3.11 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-# Run the demo (no API keys needed)
+# Run the full test suite (no API keys needed)
+python3 -m pytest tests/ -q        # 141 tests, ~0.4s
+
+# Run the offline demo (no API keys needed)
 python3 -m demo.run_demo --fast
 ```
 
@@ -54,41 +66,31 @@ MyPersona runs as an MCP server over stdio. Any MCP-compatible client (Claude Co
 claude mcp add mypersona -- python3.11 -m src.server
 ```
 
-### 12 Tools
+### 12 Tools (verified against `src/server.py`)
 
 | Tool | What It Does | When To Call It |
 |------|-------------|-----------------|
-| `ps_process_message` | Full pipeline: mood detection → belief extraction → dual-engine analysis → gap detection → introspection | Every user message — this is the main entry point |
-| `ps_get_mood` | Current emotional state (valence, arousal, quadrant, confidence, signals) | When you need the user's emotional state without running the full pipeline |
-| `ps_get_gap_analysis` | Engine divergence report — where stated values ≠ revealed behavior | After processing messages to check for self-discrepancy |
-| `ps_search_memories` | Semantic search with emotional decay and one-hop link expansion | When recalling relevant past interactions |
-| `ps_store_memory` | Store a memory with governance gate (intense memories held for human approval) | When a significant moment should be persisted |
-| `ps_get_beliefs` | Current belief network — Bayesian opinions with uncertainty | To understand the user's belief landscape |
-| `ps_get_encoding_weight` | How strongly the current emotional state would encode a memory | To preview whether a memory would trigger governance |
-| `ps_get_introspection` | Agent self-model: what it knows, what it's guessing, where it's blind | When the user asks "what do you know about me?" |
-| `ps_hold_list` | Pending governance holds — memories waiting for human approval | For dashboard/UI integration |
-| `ps_hold_approve` | Approve a held memory for storage | Human-in-the-loop decision |
-| `ps_hold_reject` | Reject a held memory | Human-in-the-loop decision |
-| `ps_get_audit_trail` | Full decision history — every gate decision, every hold resolution | For compliance and debugging |
-
-### Example: Processing a Message
-
-```python
-# Via MCP tool call
-result = await call_tool("ps_process_message", {
-    "message": "My boss said documentation is the top priority for Q1",
-    "topics": ["documentation"]
-})
-# Returns: mood state, engine opinions, gap analysis, introspection
-```
+| `detect_mood` | Analyze emotional signals in a user message (valence, arousal, quadrant, confidence) | On each user message, before downstream reasoning |
+| `get_emotional_timeline` | Mood history for a topic over time | When you need trend data across a conversation |
+| `query_beliefs` | Current beliefs with Bayesian confidence levels | To understand the user's belief landscape |
+| `update_belief` | Update a belief's strength | After receiving new evidence about a belief |
+| `search_memories` | Semantic search over emotional memories | When recalling relevant past interactions |
+| `store_emotional_memory` | Store a memory with current mood state attached (governance-gated for intense events) | When a significant moment should be persisted |
+| `manage_authority` | Add or update an authority source in the trust hierarchy | When learning who the user defers to |
+| `get_influence_analysis` | Influence sources, compliance tendency, reward profile | For dashboard / diagnostic views |
+| `get_gap_analysis` | Dual-engine gap analysis — where stated values ≠ revealed behavior | To surface theatre between Should-Self and Want-Self |
+| `explain_behavior` | Explain seemingly irrational behavior using the engine gap | When the user asks "why did I do that?" |
+| `list_holds` | Governance holds — actions paused for human review | For approval UIs |
+| `resolve_hold` | Approve or reject a paused action | Human-in-the-loop decision |
 
 ### Example: Detecting a Gap
 
 After several interactions where a user complies on documentation but lights up when talking about shipping:
 
 ```python
-gap = await call_tool("ps_get_gap_analysis", {})
-# Returns:
+# Via MCP tool call
+gap = await call_tool("get_gap_analysis", {})
+# Returns something like:
 # {
 #   "theatre_score": 0.67,
 #   "topic_gaps": [{
@@ -104,14 +106,14 @@ gap = await call_tool("ps_get_gap_analysis", {})
 
 ## Python Library Usage
 
-Use the components directly without MCP:
+Use the components directly without MCP (no API keys required):
 
 ```python
 from src.engines import MoodDetector, GapAnalyzer, PersonaEngine
 from src.memory import emotional_decay, GovernanceLayer
 from src.belief import TruthLayer
 
-# Detect mood from text
+# Detect mood from text — pure Python, no LLM
 mood = MoodDetector().detect("I can't believe it, everyone got laid off")
 # MoodState(valence=-0.95, arousal=+0.45, quadrant=STRESSED, confidence=0.9)
 
@@ -141,7 +143,7 @@ User Message ──▶ Mood Detector ──▶ valence + arousal + signals
                  ▼
   ┌─────────────────────────────────────┐
   │        Gap Layer (Theatre)          │ ◀── divergence score
-  │   | persona - reward | per topic   │
+  │   | persona - reward | per topic    │
   └──────────────┬──────────────────────┘
                  ▼
   ┌─────────────────────────────────────┐
@@ -157,7 +159,7 @@ User Message ──▶ Mood Detector ──▶ valence + arousal + signals
       ▼          ▼          ▼
   ┌─────────────────────────────────────┐
   │     Emotional Memory (Pinecone)     │
-  │  R = e^(-t/S), S ~ encoding weight │
+  │  R = e^(-t/S), S ~ encoding weight  │
   └─────────────────────────────────────┘
 ```
 
@@ -193,7 +195,7 @@ src/
 ├── agent.py     (835 lines)   Agent loop — context assembly, Opus 4.6 adaptive thinking
 └── server.py    (466 lines)   MCP server — 12 tools over stdio
 
-tests/                         141 tests across 13 files (0.4s)
+tests/                         141 tests across 13 files (~0.4s)
 demo/run_demo.py               5 scripted scenarios with Rich CLI rendering
 ```
 
@@ -222,11 +224,25 @@ python3 -m demo.run_demo --live       # Real Opus 4.6 API (needs ANTHROPIC_API_K
 python3 -m pytest tests/ -v    # 141 tests, ~0.4s
 ```
 
+CI runs the suite on Python 3.11 and 3.12. See [.github/workflows/tests.yml](.github/workflows/tests.yml).
+
 ## Requirements
 
 - Python 3.11+
 - Dependencies: `anthropic`, `pinecone`, `rich`, `mcp`, `httpx`, `pyyaml`, `python-dotenv`
-- Optional: `ANTHROPIC_API_KEY` for live mode, `PINECONE_API_KEY` for persistent memory
+- Optional: `ANTHROPIC_API_KEY` for live agent mode, `PINECONE_API_KEY` for persistent memory
+
+## Known Limitations
+
+- **Mood detector is English-only.** Signal patterns (regex + keyword tables) are calibrated on English text. Other languages will likely score near-neutral.
+- **Theatre score is a signal, not a prediction.** A high theatre score means "these two engines disagree on this topic" — it is not a probability that the user will behave theatrically. Treat it as a flag, not a forecast.
+- **Pinecone coupling.** Persistent memory assumes Pinecone. Swapping in another vector store requires editing `src/memory.py`.
+- **No auth on the MCP server.** The stdio MCP server trusts its caller. Do not expose it over a network without wrapping it in an authenticated transport.
+- **Single-user model.** There is no multi-user namespacing; run one instance per user / agent identity.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Security issues: [SECURITY.md](SECURITY.md). Changes: [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
