@@ -1,5 +1,10 @@
 # MyPersona — Emotional Memory for AI Agents
 
+> Looking for the requested facilities deliverable? See the
+> [Sauna Care & Performance Kit](docs/SAUNA_CARE_AND_PERFORMANCE_KIT.md), a
+> safety-gated specification covering inspection, wood care, UV-C sanitation,
+> heater performance, deployment, and maintenance.
+
 > **Add emotional memory to any AI agent.** Track user mood, detect when stated values diverge from revealed behavior, and store memories that fade naturally over time — intense moments persist, mundane ones dissolve.
 
 MyPersona is a Python library and MCP server that gives AI agents emotional intelligence: not just remembering *what* users said, but *how they felt* — and using that to predict what they'll actually do versus what they claim they'll do.
